@@ -43,6 +43,9 @@ def build_source_transactions(
         F.lit("Mouse"),
         F.lit("Headset"),
     )
+    product_index = (
+        F.pmod(mixed_value, F.lit(5)) + F.lit(1)
+    ).cast("integer")
 
     generated = (
         spark.range(record_count)
@@ -55,9 +58,7 @@ def build_source_transactions(
                 F.lit(1_735_689_600)
                 + F.pmod(mixed_value, F.lit(365 * 24 * 60 * 60))
             ).alias("transaction_time"),
-            F.element_at(
-                products, F.pmod(mixed_value, F.lit(5)) + F.lit(1)
-            ).alias("product"),
+            F.element_at(products, product_index).alias("product"),
             (F.pmod(mixed_value, F.lit(5)) + F.lit(1))
             .cast("integer")
             .alias("quantity"),
