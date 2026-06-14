@@ -11,6 +11,7 @@
 # COMMAND ----------
 
 import logging
+import importlib
 import sys
 from pathlib import Path
 
@@ -29,10 +30,7 @@ def _add_project_paths() -> None:
 
 _add_project_paths()
 
-from blockchain_pipeline.source_data import (  # noqa: E402
-    build_source_transactions,
-    validate_source_transactions,
-)
+from blockchain_pipeline import source_data  # noqa: E402
 from config.demo_config import (  # noqa: E402
     CATALOG_NAME,
     RANDOM_SEED,
@@ -43,6 +41,8 @@ from config.demo_config import (  # noqa: E402
     qualified_schema_name,
     qualified_table_name,
 )
+
+source_data = importlib.reload(source_data)
 
 # COMMAND ----------
 
@@ -57,13 +57,13 @@ try:
     spark.sql(f"USE CATALOG `{CATALOG_NAME}`")
     spark.sql(f"USE SCHEMA `{SCHEMA_NAME}`")
 
-    source_transactions = build_source_transactions(
+    source_transactions = source_data.build_source_transactions(
         spark=spark,
         record_count=RECORD_COUNT,
         random_seed=RANDOM_SEED,
         source_system=SOURCE_SYSTEM,
     )
-    validation = validate_source_transactions(source_transactions)
+    validation = source_data.validate_source_transactions(source_transactions)
 
     expected_validation = {
         "record_count": RECORD_COUNT,
@@ -86,7 +86,9 @@ try:
     )
 
     persisted_transactions = spark.table(table_name)
-    persisted_validation = validate_source_transactions(persisted_transactions)
+    persisted_validation = source_data.validate_source_transactions(
+        persisted_transactions
+    )
     if persisted_validation != expected_validation:
         raise ValueError(
             f"Persisted source data validation failed: {persisted_validation}"

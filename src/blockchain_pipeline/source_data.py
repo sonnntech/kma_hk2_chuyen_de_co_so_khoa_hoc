@@ -36,16 +36,14 @@ def build_source_transactions(
         row_number * F.lit(1_103_515_245) + F.lit(random_seed * 12_345),
         F.lit(2_147_483_647),
     )
-    products = F.array(
-        F.lit("Laptop"),
-        F.lit("Monitor"),
-        F.lit("Keyboard"),
-        F.lit("Mouse"),
-        F.lit("Headset"),
+    product_number = F.pmod(mixed_value, F.lit(5))
+    product = (
+        F.when(product_number == 0, F.lit("Laptop"))
+        .when(product_number == 1, F.lit("Monitor"))
+        .when(product_number == 2, F.lit("Keyboard"))
+        .when(product_number == 3, F.lit("Mouse"))
+        .otherwise(F.lit("Headset"))
     )
-    product_index = (
-        F.pmod(mixed_value, F.lit(5)) + F.lit(1)
-    ).cast("integer")
 
     generated = (
         spark.range(record_count)
@@ -58,7 +56,7 @@ def build_source_transactions(
                 F.lit(1_735_689_600)
                 + F.pmod(mixed_value, F.lit(365 * 24 * 60 * 60))
             ).alias("transaction_time"),
-            F.element_at(products, product_index).alias("product"),
+            product.alias("product"),
             (F.pmod(mixed_value, F.lit(5)) + F.lit(1))
             .cast("integer")
             .alias("quantity"),
