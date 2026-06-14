@@ -1,0 +1,4 @@
+# Databricks Runtime provides PySpark and Delta Lake.
+# Install these packages only for local development and testing.
+pyspark>=3.5,<4.0
+pytest>=8,<9
