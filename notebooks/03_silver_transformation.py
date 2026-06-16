@@ -3,6 +3,10 @@
 # MAGIC # Task 03 - Silver transformation
 # MAGIC
 # MAGIC Normalizes, validates, recalculates amount, and deduplicates Bronze data.
+# MAGIC
+# MAGIC **Compute requirement:** run this as a Python notebook on Databricks
+# MAGIC notebook/serverless compute. SQL Warehouses only execute SQL cells and
+# MAGIC cannot run this notebook.
 
 # COMMAND ----------
 

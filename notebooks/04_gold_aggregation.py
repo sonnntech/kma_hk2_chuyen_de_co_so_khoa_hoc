@@ -3,6 +3,10 @@
 # MAGIC # Task 03 - Gold aggregation
 # MAGIC
 # MAGIC Aggregates Silver transactions by transaction date and product.
+# MAGIC
+# MAGIC **Compute requirement:** run this as a Python notebook on Databricks
+# MAGIC notebook/serverless compute. SQL Warehouses only execute SQL cells and
+# MAGIC cannot run this notebook.
 
 # COMMAND ----------
 
