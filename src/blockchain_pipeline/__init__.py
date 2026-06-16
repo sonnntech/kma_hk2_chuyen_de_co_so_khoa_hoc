@@ -23,7 +23,7 @@ _LAZY_EXPORTS = {
 
 
 def __getattr__(name: str) -> Any:
-    """Load PySpark-dependent exports only when they are requested."""
+    """Load PySpark-dependent exports only when requested."""
     if name not in _LAZY_EXPORTS:
         raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
     module_name, attribute_name = _LAZY_EXPORTS[name]

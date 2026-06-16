@@ -6,6 +6,7 @@ SOURCE_TABLE: str = "source_transactions"
 BRONZE_TABLE: str = "bronze_transactions"
 SILVER_TABLE: str = "silver_transactions"
 GOLD_TABLE: str = "gold_daily_summary"
+BLOCKCHAIN_LEDGER_TABLE: str = "blockchain_ledger"
 RECORD_COUNT: int = 10_000
 RANDOM_SEED: int = 42
 SOURCE_SYSTEM: str = "SCHOOL_DEMO"
