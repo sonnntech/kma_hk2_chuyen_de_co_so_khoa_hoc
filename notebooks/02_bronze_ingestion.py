@@ -9,6 +9,7 @@
 import importlib
 import logging
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -25,13 +26,15 @@ def _add_project_paths() -> None:
 
 _add_project_paths()
 
-from blockchain_pipeline import pipeline  # noqa: E402
+from blockchain_pipeline import ledger, pipeline  # noqa: E402
 from config.demo_config import (  # noqa: E402
+    BLOCKCHAIN_LEDGER_TABLE,
     BRONZE_TABLE,
     SOURCE_TABLE,
     qualified_table_name,
 )
 
+ledger = importlib.reload(ledger)
 pipeline = importlib.reload(pipeline)
 logging.basicConfig(level=logging.INFO)
 
@@ -42,6 +45,38 @@ bronze = pipeline.run_bronze(
     source_table=qualified_table_name(SOURCE_TABLE),
     bronze_table=qualified_table_name(BRONZE_TABLE),
 )
+pipeline_run_id = bronze.select("pipeline_run_id").first()["pipeline_run_id"]
+created_at = datetime.now(timezone.utc)
+source_table = qualified_table_name(SOURCE_TABLE)
+bronze_table = qualified_table_name(BRONZE_TABLE)
+ledger_table = qualified_table_name(BLOCKCHAIN_LEDGER_TABLE)
+
+source_block = ledger.create_block_for_dataframe(
+    dataframe=spark.table(source_table),
+    pipeline_run_id=pipeline_run_id,
+    pipeline_stage="SOURCE",
+    source_table=source_table,
+    target_table=source_table,
+    transformation="Source transaction data snapshot",
+    created_at=created_at,
+    sort_columns=["transaction_id"],
+)
+ledger.append_block_if_missing(spark, ledger_table, source_block)
+
+bronze_block = ledger.create_block_for_dataframe(
+    dataframe=bronze,
+    pipeline_run_id=pipeline_run_id,
+    pipeline_stage="BRONZE",
+    source_table=source_table,
+    target_table=bronze_table,
+    transformation="Add pipeline_run_id, ingestion_time and source_table",
+    created_at=created_at,
+    previous_block=source_block,
+    sort_columns=["transaction_id"],
+)
+ledger.append_block_if_missing(spark, ledger_table, bronze_block)
 
 display(bronze.groupBy("pipeline_run_id", "source_table").count())
+ledger_snapshot = spark.table(ledger_table)
+display(ledger_snapshot.where(ledger_snapshot["pipeline_run_id"] == pipeline_run_id))
 display(bronze.orderBy("transaction_id").limit(10))

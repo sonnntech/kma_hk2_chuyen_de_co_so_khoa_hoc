@@ -9,6 +9,7 @@
 import importlib
 import logging
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -25,13 +26,15 @@ def _add_project_paths() -> None:
 
 _add_project_paths()
 
-from blockchain_pipeline import pipeline  # noqa: E402
+from blockchain_pipeline import ledger, pipeline  # noqa: E402
 from config.demo_config import (  # noqa: E402
+    BLOCKCHAIN_LEDGER_TABLE,
     BRONZE_TABLE,
     SILVER_TABLE,
     qualified_table_name,
 )
 
+ledger = importlib.reload(ledger)
 pipeline = importlib.reload(pipeline)
 logging.basicConfig(level=logging.INFO)
 
@@ -42,6 +45,28 @@ silver = pipeline.run_silver(
     bronze_table=qualified_table_name(BRONZE_TABLE),
     silver_table=qualified_table_name(SILVER_TABLE),
 )
+pipeline_run_id = silver.select("pipeline_run_id").first()["pipeline_run_id"]
+ledger_table = qualified_table_name(BLOCKCHAIN_LEDGER_TABLE)
+bronze_block = ledger.read_stage_block(
+    spark=spark,
+    ledger_table=ledger_table,
+    pipeline_run_id=pipeline_run_id,
+    pipeline_stage="BRONZE",
+)
+silver_block = ledger.create_block_for_dataframe(
+    dataframe=silver,
+    pipeline_run_id=pipeline_run_id,
+    pipeline_stage="SILVER",
+    source_table=qualified_table_name(BRONZE_TABLE),
+    target_table=qualified_table_name(SILVER_TABLE),
+    transformation="Validate, normalize, deduplicate and recalculate amount",
+    created_at=datetime.now(timezone.utc),
+    previous_block=bronze_block,
+    sort_columns=["transaction_id"],
+)
+ledger.append_block_if_missing(spark, ledger_table, silver_block)
 
 display(silver.selectExpr("count(*) AS silver_record_count"))
+ledger_snapshot = spark.table(ledger_table)
+display(ledger_snapshot.where(ledger_snapshot["pipeline_run_id"] == pipeline_run_id))
 display(silver.orderBy("transaction_id").limit(10))
