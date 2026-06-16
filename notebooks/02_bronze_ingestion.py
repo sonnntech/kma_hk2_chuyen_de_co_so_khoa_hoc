@@ -3,6 +3,10 @@
 # MAGIC # Task 03 - Bronze ingestion
 # MAGIC
 # MAGIC Reads Source, adds run metadata, and safely replaces the Bronze table.
+# MAGIC
+# MAGIC **Compute requirement:** run this as a Python notebook on Databricks
+# MAGIC notebook/serverless compute. SQL Warehouses only execute SQL cells and
+# MAGIC cannot run this notebook.
 
 # COMMAND ----------
 
