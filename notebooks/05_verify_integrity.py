@@ -71,7 +71,10 @@ verification.append_verification_results(
     results=results,
 )
 
-results_df = spark.createDataFrame([result.as_record() for result in results])
+results_df = verification.verification_results_dataframe(
+    spark=spark,
+    records=results,
+)
 display(results_df.orderBy("block_index"))
 
 first_broken = verification.first_broken_block(results)
