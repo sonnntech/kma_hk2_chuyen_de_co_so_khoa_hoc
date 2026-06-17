@@ -30,47 +30,98 @@ def _add_project_paths() -> None:
 
 _add_project_paths()
 
-from blockchain_pipeline import ledger, pipeline  # noqa: E402
+from blockchain_pipeline import ledger, lineage, pipeline  # noqa: E402
 from config.demo_config import (  # noqa: E402
     BLOCKCHAIN_LEDGER_TABLE,
     BRONZE_TABLE,
+    LINEAGE_EVENTS_TABLE,
     SILVER_TABLE,
     qualified_table_name,
 )
 
 ledger = importlib.reload(ledger)
+lineage = importlib.reload(lineage)
 pipeline = importlib.reload(pipeline)
 logging.basicConfig(level=logging.INFO)
 
 # COMMAND ----------
 
-silver = pipeline.run_silver(
-    spark=spark,
-    bronze_table=qualified_table_name(BRONZE_TABLE),
-    silver_table=qualified_table_name(SILVER_TABLE),
-)
-pipeline_run_id = silver.select("pipeline_run_id").first()["pipeline_run_id"]
+bronze_table = qualified_table_name(BRONZE_TABLE)
+silver_table = qualified_table_name(SILVER_TABLE)
 ledger_table = qualified_table_name(BLOCKCHAIN_LEDGER_TABLE)
-bronze_block = ledger.read_stage_block(
-    spark=spark,
-    ledger_table=ledger_table,
-    pipeline_run_id=pipeline_run_id,
-    pipeline_stage="BRONZE",
+lineage_table = qualified_table_name(LINEAGE_EVENTS_TABLE)
+started_at = lineage.utc_now()
+pipeline_run_id = "UNKNOWN"
+transformation_name = "silver_transformation"
+transformation_description = (
+    "Validate, normalize, deduplicate and recalculate transaction amount"
 )
-silver_block = ledger.create_block_for_dataframe(
-    dataframe=silver,
-    pipeline_run_id=pipeline_run_id,
-    pipeline_stage="SILVER",
-    source_table=qualified_table_name(BRONZE_TABLE),
-    target_table=qualified_table_name(SILVER_TABLE),
-    transformation="Validate, normalize, deduplicate and recalculate amount",
-    created_at=datetime.now(timezone.utc),
-    previous_block=bronze_block,
-    sort_columns=["transaction_id"],
-)
-ledger.append_block_if_missing(spark, ledger_table, silver_block)
+
+try:
+    silver = pipeline.run_silver(
+        spark=spark,
+        bronze_table=bronze_table,
+        silver_table=silver_table,
+    )
+    pipeline_run_id = silver.select("pipeline_run_id").first()["pipeline_run_id"]
+    bronze_block = ledger.read_stage_block(
+        spark=spark,
+        ledger_table=ledger_table,
+        pipeline_run_id=pipeline_run_id,
+        pipeline_stage="BRONZE",
+    )
+    silver_block = ledger.create_block_for_dataframe(
+        dataframe=silver,
+        pipeline_run_id=pipeline_run_id,
+        pipeline_stage="SILVER",
+        source_table=bronze_table,
+        target_table=silver_table,
+        transformation=transformation_description,
+        created_at=datetime.now(timezone.utc),
+        previous_block=bronze_block,
+        sort_columns=["transaction_id"],
+    )
+    ledger.append_block_if_missing(spark, ledger_table, silver_block)
+    lineage.append_lineage_event(
+        spark=spark,
+        lineage_table=lineage_table,
+        event=lineage.create_success_event(
+            pipeline_run_id=pipeline_run_id,
+            source_stage="BRONZE",
+            target_stage="SILVER",
+            source_table=bronze_table,
+            target_table=silver_table,
+            transformation_name=transformation_name,
+            transformation_description=transformation_description,
+            input_record_count=bronze_block.record_count,
+            output_record_count=silver_block.record_count,
+            input_batch_hash=bronze_block.batch_hash,
+            output_batch_hash=silver_block.batch_hash,
+            started_at=started_at,
+            finished_at=lineage.utc_now(),
+        ),
+    )
+except Exception as error:
+    lineage.safe_append_lineage_event(
+        spark=spark,
+        lineage_table=lineage_table,
+        event=lineage.create_failed_event(
+            pipeline_run_id=pipeline_run_id,
+            source_stage="BRONZE",
+            target_stage="SILVER",
+            source_table=bronze_table,
+            target_table=silver_table,
+            transformation_name=transformation_name,
+            transformation_description=transformation_description,
+            started_at=started_at,
+            error_message=str(error),
+        ),
+    )
+    raise
 
 display(silver.selectExpr("count(*) AS silver_record_count"))
 ledger_snapshot = spark.table(ledger_table)
 display(ledger_snapshot.where(ledger_snapshot["pipeline_run_id"] == pipeline_run_id))
+lineage_snapshot = spark.table(lineage_table)
+display(lineage_snapshot.where(lineage_snapshot["pipeline_run_id"] == pipeline_run_id))
 display(silver.orderBy("transaction_id").limit(10))
