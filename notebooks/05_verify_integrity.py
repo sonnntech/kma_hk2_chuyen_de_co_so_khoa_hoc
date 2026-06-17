@@ -71,11 +71,14 @@ verification.append_verification_results(
     results=results,
 )
 
-results_df = verification.verification_results_dataframe(
-    spark=spark,
-    records=results,
+current_verified_at = results[0].verified_at
+results_df = spark.table(results_table)
+display(
+    results_df.where(
+        (results_df["pipeline_run_id"] == selected_pipeline_run_id)
+        & (results_df["verified_at"] == current_verified_at)
+    ).orderBy("block_index")
 )
-display(results_df.orderBy("block_index"))
 
 first_broken = verification.first_broken_block(results)
 if first_broken is None:
