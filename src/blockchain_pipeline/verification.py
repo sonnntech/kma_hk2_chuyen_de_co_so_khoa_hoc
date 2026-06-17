@@ -217,6 +217,29 @@ def append_verification_results(
     results: Iterable[VerificationResult],
 ) -> None:
     """Append verification results to a managed Delta table."""
+    records = [result.as_record() for result in results]
+    LOGGER.info("Appending %s verification results to %s", len(records), results_table)
+    verification_results_dataframe(spark=spark, records=records).write.format(
+        "delta"
+    ).mode("append").saveAsTable(results_table)
+
+
+def verification_results_dataframe(
+    spark: Any,
+    records: Iterable[VerificationResult | dict[str, Any]],
+) -> Any:
+    """Create a Spark DataFrame for verification results using an explicit schema."""
+    result_records = [
+        record.as_record() if isinstance(record, VerificationResult) else record
+        for record in records
+    ]
+    if not result_records:
+        raise ValueError("records must not be empty")
+    return spark.createDataFrame(result_records, schema=_verification_result_schema())
+
+
+def _verification_result_schema() -> Any:
+    """Return the Spark schema for verification result rows."""
     from pyspark.sql.types import (  # pylint: disable=import-outside-toplevel
         IntegerType,
         StringType,
@@ -225,10 +248,7 @@ def append_verification_results(
         TimestampType,
     )
 
-    records = [result.as_record() for result in results]
-    if not records:
-        raise ValueError("results must not be empty")
-    schema = StructType(
+    return StructType(
         [
             StructField("pipeline_run_id", StringType(), nullable=False),
             StructField("block_index", IntegerType(), nullable=False),
@@ -243,10 +263,6 @@ def append_verification_results(
             StructField("verified_at", TimestampType(), nullable=False),
         ]
     )
-    LOGGER.info("Appending %s verification results to %s", len(records), results_table)
-    spark.createDataFrame(records, schema=schema).write.format("delta").mode(
-        "append"
-    ).saveAsTable(results_table)
 
 
 def _result(
