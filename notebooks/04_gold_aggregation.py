@@ -30,51 +30,100 @@ def _add_project_paths() -> None:
 
 _add_project_paths()
 
-from blockchain_pipeline import ledger, pipeline  # noqa: E402
+from blockchain_pipeline import ledger, lineage, pipeline  # noqa: E402
 from config.demo_config import (  # noqa: E402
     BLOCKCHAIN_LEDGER_TABLE,
     GOLD_TABLE,
+    LINEAGE_EVENTS_TABLE,
     SILVER_TABLE,
     qualified_table_name,
 )
 
 ledger = importlib.reload(ledger)
+lineage = importlib.reload(lineage)
 pipeline = importlib.reload(pipeline)
 logging.basicConfig(level=logging.INFO)
 
 # COMMAND ----------
 
-gold = pipeline.run_gold(
-    spark=spark,
-    silver_table=qualified_table_name(SILVER_TABLE),
-    gold_table=qualified_table_name(GOLD_TABLE),
-)
+silver_table = qualified_table_name(SILVER_TABLE)
+gold_table = qualified_table_name(GOLD_TABLE)
 ledger_table = qualified_table_name(BLOCKCHAIN_LEDGER_TABLE)
-pipeline_run_id = (
-    spark.table(qualified_table_name(SILVER_TABLE))
-    .select("pipeline_run_id")
-    .first()["pipeline_run_id"]
-)
-silver_block = ledger.read_stage_block(
-    spark=spark,
-    ledger_table=ledger_table,
-    pipeline_run_id=pipeline_run_id,
-    pipeline_stage="SILVER",
-)
-gold_block = ledger.create_block_for_dataframe(
-    dataframe=gold,
-    pipeline_run_id=pipeline_run_id,
-    pipeline_stage="GOLD",
-    source_table=qualified_table_name(SILVER_TABLE),
-    target_table=qualified_table_name(GOLD_TABLE),
-    transformation="Aggregate Silver transactions by date and product",
-    created_at=datetime.now(timezone.utc),
-    previous_block=silver_block,
-    sort_columns=["transaction_date", "product"],
-)
-ledger.append_block_if_missing(spark, ledger_table, gold_block)
+lineage_table = qualified_table_name(LINEAGE_EVENTS_TABLE)
+started_at = lineage.utc_now()
+pipeline_run_id = "UNKNOWN"
+transformation_name = "gold_aggregation"
+transformation_description = "Aggregate Silver transactions by date and product"
+
+try:
+    gold = pipeline.run_gold(
+        spark=spark,
+        silver_table=silver_table,
+        gold_table=gold_table,
+    )
+    pipeline_run_id = (
+        spark.table(silver_table)
+        .select("pipeline_run_id")
+        .first()["pipeline_run_id"]
+    )
+    silver_block = ledger.read_stage_block(
+        spark=spark,
+        ledger_table=ledger_table,
+        pipeline_run_id=pipeline_run_id,
+        pipeline_stage="SILVER",
+    )
+    gold_block = ledger.create_block_for_dataframe(
+        dataframe=gold,
+        pipeline_run_id=pipeline_run_id,
+        pipeline_stage="GOLD",
+        source_table=silver_table,
+        target_table=gold_table,
+        transformation=transformation_description,
+        created_at=datetime.now(timezone.utc),
+        previous_block=silver_block,
+        sort_columns=["transaction_date", "product"],
+    )
+    ledger.append_block_if_missing(spark, ledger_table, gold_block)
+    lineage.append_lineage_event(
+        spark=spark,
+        lineage_table=lineage_table,
+        event=lineage.create_success_event(
+            pipeline_run_id=pipeline_run_id,
+            source_stage="SILVER",
+            target_stage="GOLD",
+            source_table=silver_table,
+            target_table=gold_table,
+            transformation_name=transformation_name,
+            transformation_description=transformation_description,
+            input_record_count=silver_block.record_count,
+            output_record_count=gold_block.record_count,
+            input_batch_hash=silver_block.batch_hash,
+            output_batch_hash=gold_block.batch_hash,
+            started_at=started_at,
+            finished_at=lineage.utc_now(),
+        ),
+    )
+except Exception as error:
+    lineage.safe_append_lineage_event(
+        spark=spark,
+        lineage_table=lineage_table,
+        event=lineage.create_failed_event(
+            pipeline_run_id=pipeline_run_id,
+            source_stage="SILVER",
+            target_stage="GOLD",
+            source_table=silver_table,
+            target_table=gold_table,
+            transformation_name=transformation_name,
+            transformation_description=transformation_description,
+            started_at=started_at,
+            error_message=str(error),
+        ),
+    )
+    raise
 
 display(gold.selectExpr("count(*) AS gold_group_count"))
 ledger_snapshot = spark.table(ledger_table)
 display(ledger_snapshot.where(ledger_snapshot["pipeline_run_id"] == pipeline_run_id))
+lineage_snapshot = spark.table(lineage_table)
+display(lineage_snapshot.where(lineage_snapshot["pipeline_run_id"] == pipeline_run_id))
 display(gold.orderBy("transaction_date", "product"))
