@@ -8,6 +8,7 @@ SILVER_TABLE: str = "silver_transactions"
 GOLD_TABLE: str = "gold_daily_summary"
 BLOCKCHAIN_LEDGER_TABLE: str = "blockchain_ledger"
 LINEAGE_EVENTS_TABLE: str = "lineage_events"
+VERIFICATION_RESULTS_TABLE: str = "verification_results"
 RECORD_COUNT: int = 10_000
 RANDOM_SEED: int = 42
 SOURCE_SYSTEM: str = "SCHOOL_DEMO"
