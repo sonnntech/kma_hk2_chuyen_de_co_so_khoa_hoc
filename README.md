@@ -15,6 +15,12 @@ Mục tiêu của demo:
 
 > MVP là mô hình `tamper-evident`: giúp phát hiện thay đổi. Đây chưa phải blockchain phi tập trung hoàn chỉnh như Ethereum.
 
+Tài liệu vận hành:
+
+- `RUNBOOK.md`: hướng dẫn chạy lại từ đầu trên Databricks.
+- `DEMO_SCRIPT.md`: kịch bản trình bày 10-15 phút.
+- `sql/dashboard_queries.sql`: truy vấn KPI cho Databricks SQL dashboard.
+
 ---
 
 ## 1. Kiến trúc đề xuất
@@ -75,15 +81,20 @@ Không sử dụng dữ liệu thật hoặc dữ liệu nhạy cảm trong môi
 
 ---
 
-## 3. Cấu trúc repository dự kiến
+## 3. Cấu trúc repository thực tế
 
 ```text
 .
+├── DEMO_SCRIPT.md
 ├── README.md
+├── RUNBOOK.md
 ├── requirements.txt
 ├── .gitignore
 ├── config/
+│   ├── __init__.py
 │   └── demo_config.py
+├── docs/
+│   └── CODEX_IMPLEMENTATION_PLAN.md
 ├── notebooks/
 │   ├── 00_setup_environment.py
 │   ├── 01_generate_source_data.py
@@ -100,16 +111,25 @@ Không sử dụng dữ liệu thật hoặc dữ liệu nhạy cảm trong môi
 │       ├── hashing.py
 │       ├── ledger.py
 │       ├── lineage.py
-│       ├── verification.py
 │       ├── metrics.py
+│       ├── models.py
+│       ├── pipeline.py
+│       ├── source_data.py
+│       ├── tamper.py
+│       ├── verification.py
 │       └── schemas.py
 ├── sql/
 │   ├── dashboard_queries.sql
 │   └── tamper_scenarios.sql
 └── tests/
+    ├── conftest.py
     ├── test_canonicalization.py
     ├── test_hashing.py
     ├── test_ledger.py
+    ├── test_lineage.py
+    ├── test_metrics.py
+    ├── test_pipeline_rules.py
+    ├── test_tamper.py
     └── test_verification.py
 ```
 
@@ -179,14 +199,12 @@ Sinh dữ liệu giao dịch giả lập có thể tái lập bằng random seed
 
 ### Bronze
 
-Lưu dữ liệu gần với nguồn và bổ sung:
+Lưu dữ liệu gần với nguồn và bổ sung metadata chạy pipeline:
 
 ```text
 pipeline_run_id
-source_file
-source_system
 ingestion_time
-row_hash
+source_table
 ```
 
 ### Silver
@@ -197,7 +215,7 @@ Thực hiện:
 - Kiểm tra trường bắt buộc.
 - Chuẩn hóa timestamp và decimal.
 - Tính lại `amount = quantity × unit_price`.
-- Tạo `row_hash` mới sau biến đổi.
+- Giữ metadata `pipeline_run_id`, `ingestion_time`, `source_table`.
 
 ### Gold
 
@@ -473,7 +491,16 @@ Các KPI và biểu đồ cần có:
 - Block đầu tiên bị phá vỡ.
 - Lịch sử verification theo thời gian.
 
-SQL đặt tại `sql/dashboard_queries.sql`.
+SQL đặt tại `sql/dashboard_queries.sql`, gồm các nhóm truy vấn:
+
+- Pipeline run và block totals.
+- Latest verification status counts.
+- Tamper events được phát hiện.
+- Verification latency theo pipeline run.
+- Processing overhead theo `record_count`.
+- Lineage flow.
+- First broken block.
+- Ledger stage overview.
 
 ---
 
@@ -492,6 +519,9 @@ SQL đặt tại `sql/dashboard_queries.sql`.
 10. Hiển thị stage và block bị lỗi
 11. Trình bày dashboard và kết quả thực nghiệm
 ```
+
+Chi tiết vận hành nằm trong `RUNBOOK.md`. Kịch bản nói và expected result cho
+buổi demo nằm trong `DEMO_SCRIPT.md`.
 
 ---
 
@@ -519,18 +549,21 @@ Unit test cần kiểm tra:
 
 ## 16. Tiêu chí nghiệm thu MVP
 
-- [ ] Sinh được dữ liệu giả lập có thể tái lập.
-- [ ] Chạy được Source → Bronze → Silver → Gold.
-- [ ] Sinh được `row_hash` và `batch_hash`.
-- [ ] Ghi được block theo từng stage.
-- [ ] Liên kết block bằng `previous_hash`.
-- [ ] Ghi được data lineage.
-- [ ] Kiểm chứng được dữ liệu từng stage.
-- [ ] Phát hiện được sửa, xóa và chèn dữ liệu.
-- [ ] Phát hiện được block bị sửa và chain bị đứt.
-- [ ] Có bảng số liệu thực nghiệm.
-- [ ] Có dashboard queries.
-- [ ] Có unit test cho logic chính.
+- [x] Sinh được dữ liệu giả lập có thể tái lập.
+- [x] Chạy được Source → Bronze → Silver → Gold.
+- [x] Tạo được `batch_hash` cho từng stage và `schema_hash` cho ledger.
+- [x] Ghi được block SOURCE, BRONZE, SILVER, GOLD.
+- [x] Liên kết block bằng `previous_hash`.
+- [x] Ghi được data lineage SUCCESS và FAILED.
+- [x] Kiểm chứng được data hash, record count, block hash và chain link.
+- [x] Phát hiện được sửa, xóa và chèn dữ liệu.
+- [x] Phát hiện được block bị sửa và chain bị đứt.
+- [x] Có bảng số liệu thực nghiệm `experiment_metrics`.
+- [x] Có dashboard queries cho KPI chính.
+- [x] Có unit test cho canonicalization, hashing, ledger, lineage, pipeline,
+      tamper, verification và metrics.
+- [x] Có runbook chạy lại demo từ đầu.
+- [x] Có demo script 10-15 phút.
 
 ---
 
