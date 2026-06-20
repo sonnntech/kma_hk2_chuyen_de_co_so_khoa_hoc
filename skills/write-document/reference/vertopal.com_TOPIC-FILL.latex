@@ -1,0 +1,1413 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{tuxean-ux111ux1ec1-tuxe0i}{%
+\section{Tên đề tài}\label{tuxean-ux111ux1ec1-tuxe0i}}
+
+\textbf{Nghiên cứu xây dựng mô hình ứng dụng Blockchain nhằm đảm bảo
+tính toàn vẹn và truy vết dữ liệu trong hệ thống Data Pipeline}
+
+\hypertarget{i.-mux1ee5c-tiuxeau-nghiuxean-cux1ee9u-cux1ee7a-ux111ux1ec1-tuxe0i}{%
+\subsection{I. Mục tiêu nghiên cứu của đề
+tài}\label{i.-mux1ee5c-tiuxeau-nghiuxean-cux1ee9u-cux1ee7a-ux111ux1ec1-tuxe0i}}
+
+\hypertarget{mux1ee5c-tiuxeau-tux1ed5ng-quuxe1t}{%
+\subsubsection{1. Mục tiêu tổng
+quát}\label{mux1ee5c-tiuxeau-tux1ed5ng-quuxe1t}}
+
+Đề tài nghiên cứu cơ chế bảo đảm \textbf{Data Integrity} và \textbf{Data
+Lineage} trong hệ thống \textbf{Data Pipeline}, từ đó đề xuất mô hình
+ứng dụng Blockchain theo hướng \textbf{tamper-evident} để tăng khả năng
+kiểm chứng trạng thái dữ liệu, phát hiện thay đổi trái phép và hỗ trợ
+truy vết lịch sử xử lý dữ liệu.
+
+Phạm vi nghiên cứu tập trung vào mô hình Blockchain dạng \textbf{hash
+chain} phục vụ kiểm chứng dữ liệu trong pipeline. Mô hình không triển
+khai mạng Blockchain phi tập trung hoàn chỉnh, không sử dụng
+\textbf{Consensus} hay \textbf{Smart Contract}, mà khai thác các đặc
+tính cốt lõi gồm \textbf{SHA-256}, liên kết block bằng
+\texttt{previous\_hash}, chuẩn hóa payload và kiểm chứng lại trạng thái
+dữ liệu theo từng pipeline run.
+
+\hypertarget{mux1ee5c-tiuxeau-cux1ee5-thux1ec3}{%
+\subsubsection{2. Mục tiêu cụ
+thể}\label{mux1ee5c-tiuxeau-cux1ee5-thux1ec3}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Nhóm mục tiêu
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung
+\end{minipage} \\
+\midrule()
+\endhead
+Tổng quan nền tảng & Phân tích kiến trúc Data Pipeline, vai trò của
+pipeline trong xử lý dữ liệu hiện đại và các yêu cầu Data Governance
+liên quan. \\
+Phân tích rủi ro & Xác định các nguy cơ làm mất toàn vẹn dữ liệu trong
+quá trình Ingestion, ETL/ELT, lưu trữ và truy cập dữ liệu. \\
+Cơ chế toàn vẹn & Nghiên cứu cách sử dụng hàm băm, chuẩn hóa dữ liệu,
+record count và schema hash để tạo bằng chứng kiểm chứng dữ liệu. \\
+Cơ chế truy vết & Nghiên cứu Data Lineage theo pipeline run,
+transformation, input/output record count, batch hash và trạng thái xử
+lý. \\
+Blockchain ứng dụng & Phân tích cách tổ chức ledger dạng chuỗi block
+liên kết bằng hash để phát hiện thay đổi dữ liệu và metadata kiểm
+chứng. \\
+Mô hình thử nghiệm & Xây dựng pipeline Source -\textgreater{} Bronze
+-\textgreater{} Silver -\textgreater{} Gold, tích hợp ledger, cơ chế
+kiểm chứng, tamper scenarios, benchmark và dashboard. \\
+Đánh giá & Đánh giá khả năng phát hiện thay đổi, khả năng truy vết và
+chi phí Overhead khi bổ sung cơ chế kiểm chứng. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{ii.-ux111ux1ec1-cux1b0ux1a1ng-chi-tiux1ebft-3-chux1b0ux1a1ng}{%
+\subsection{II. Đề cương chi tiết 3
+chương}\label{ii.-ux111ux1ec1-cux1b0ux1a1ng-chi-tiux1ebft-3-chux1b0ux1a1ng}}
+
+\hypertarget{chux1b0ux1a1ng-1}{%
+\subsection{CHƯƠNG 1}\label{chux1b0ux1a1ng-1}}
+
+\hypertarget{tux1ed5ng-quan-vux1ec1-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsection{TỔNG QUAN VỀ ĐẢM BẢO TÍNH TOÀN VẸN VÀ TRUY VẾT DỮ LIỆU TRONG
+HỆ THỐNG DATA
+PIPELINE}\label{tux1ed5ng-quan-vux1ec1-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{tux1ed5ng-quan-vux1ec1-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsubsection{1.1. Tổng quan về hệ thống Data
+Pipeline}\label{tux1ed5ng-quan-vux1ec1-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{khuxe1i-niux1ec7m-hux1ec7-thux1ed1ng-data-pipeline}{%
+\paragraph{1.1.1. Khái niệm hệ thống Data
+Pipeline}\label{khuxe1i-niux1ec7m-hux1ec7-thux1ed1ng-data-pipeline}}
+
+Data Pipeline là tập hợp các bước xử lý dữ liệu được tổ chức theo luồng,
+trong đó dữ liệu được thu thập từ nhiều nguồn, được kiểm tra, biến đổi,
+chuẩn hóa và lưu trữ tại các tầng phục vụ phân tích hoặc vận hành.
+Pipeline có thể chạy theo Batch, Streaming hoặc kiến trúc lai tùy thuộc
+yêu cầu Latency, Throughput và tính nhất quán dữ liệu.
+
+Trong hệ thống dữ liệu hiện đại, Data Pipeline đóng vai trò kết nối giữa
+hệ thống phát sinh dữ liệu và các nền tảng khai thác dữ liệu như Data
+Lake, Data Warehouse, Lakehouse, BI Dashboard hoặc hệ thống Machine
+Learning. Chất lượng của pipeline ảnh hưởng trực tiếp đến độ tin cậy của
+báo cáo, mô hình phân tích và quyết định nghiệp vụ.
+
+\hypertarget{kiux1ebfn-truxfac-tux1ed5ng-thux1ec3-cux1ee7a-hux1ec7-thux1ed1ng-data-pipeline}{%
+\paragraph{1.1.2. Kiến trúc tổng thể của hệ thống Data
+Pipeline}\label{kiux1ebfn-truxfac-tux1ed5ng-thux1ec3-cux1ee7a-hux1ec7-thux1ed1ng-data-pipeline}}
+
+Một kiến trúc Data Pipeline điển hình gồm các tầng sau:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Thành phần
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vai trò
+\end{minipage} \\
+\midrule()
+\endhead
+Data Source & Nơi phát sinh dữ liệu gốc, bao gồm database, file, API,
+event stream hoặc log hệ thống. \\
+Ingestion Layer & Thu thập dữ liệu từ nguồn, ghi nhận metadata đầu vào
+và chuyển dữ liệu vào vùng xử lý. \\
+Processing Layer & Thực hiện ETL/ELT, validation, deduplication,
+enrichment, aggregation và chuẩn hóa dữ liệu. \\
+Storage Layer & Lưu trữ dữ liệu theo các mức raw, cleaned, curated hoặc
+analytical. \\
+Serving Layer & Cung cấp dữ liệu cho reporting, dashboard, auditing,
+analytics hoặc downstream applications. \\
+Monitoring \& Governance & Theo dõi chất lượng dữ liệu, lineage, quyền
+truy cập, audit log và trạng thái vận hành. \\
+\bottomrule()
+\end{longtable}
+
+Kiến trúc \textbf{Medallion Architecture} phân tách dữ liệu theo các
+tầng Bronze, Silver và Gold. Bronze lưu dữ liệu gần nguồn, Silver lưu dữ
+liệu đã kiểm tra và chuẩn hóa, Gold lưu dữ liệu tổng hợp phục vụ phân
+tích.
+
+\hypertarget{vai-truxf2-cux1ee7a-data-pipeline-trong-ux111ux1ea3m-bux1ea3o-chux1ea5t-lux1b0ux1ee3ng-dux1eef-liux1ec7u}{%
+\paragraph{1.1.3. Vai trò của Data Pipeline trong đảm bảo chất lượng dữ
+liệu}\label{vai-truxf2-cux1ee7a-data-pipeline-trong-ux111ux1ea3m-bux1ea3o-chux1ea5t-lux1b0ux1ee3ng-dux1eef-liux1ec7u}}
+
+Data Pipeline thực thi các quy tắc \textbf{Data Quality} như schema
+validation, type casting, mandatory field validation, deduplication và
+kiểm tra tính nhất quán toán học. Ví dụ, dữ liệu giao dịch cần bảo đảm
+quan hệ:
+
+\[
+\text{amount} = \text{quantity} \times \text{unit\_price}
+\]
+
+Pipeline chỉ bảo đảm chất lượng tại thời điểm xử lý nếu không có cơ chế
+kiểm chứng độc lập sau khi dữ liệu đã được ghi. Rủi ro còn lại nằm ở các
+thao tác sửa, xóa, chèn hoặc thay đổi metadata sau xử lý. Bài toán toàn
+vẹn dữ liệu yêu cầu thêm một lớp kiểm chứng để xác nhận trạng thái dữ
+liệu hiện tại có khớp với trạng thái đã được ghi nhận trước đó hay
+không.
+
+\hypertarget{cuxe1c-nguy-cux1a1-mux1ea5t-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsubsection{1.2. Các nguy cơ mất toàn vẹn dữ liệu trong hệ thống Data
+Pipeline}\label{cuxe1c-nguy-cux1a1-mux1ea5t-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{nguy-cux1a1-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-truyux1ec1n-dux1eabn}{%
+\paragraph{1.2.1. Nguy cơ thay đổi dữ liệu trong quá trình truyền
+dẫn}\label{nguy-cux1a1-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-truyux1ec1n-dux1eabn}}
+
+Dữ liệu có thể bị thay đổi khi truyền từ nguồn vào pipeline do lỗi mạng,
+lỗi mã hóa, lỗi định dạng, ghi đè file, mapping sai schema hoặc can
+thiệp trái phép. Rủi ro này làm dữ liệu đầu vào khác với dữ liệu phát
+sinh ban đầu, dẫn đến toàn bộ các tầng xử lý sau đó kế thừa sai lệch.
+
+Kiểm soát nguy cơ này yêu cầu một cơ chế xác thực chéo tại điểm tiếp
+nhận bằng cách đối chiếu giá trị toàn vẹn gốc với các phân đoạn dữ liệu
+sau khi truyền, đồng thời ghi nhận bằng chứng kiểm toán đủ độc lập để
+phát hiện sai lệch trong quá trình vận chuyển dữ liệu.
+
+\hypertarget{nguy-cux1a1-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-xux1eed-luxfd-etl}{%
+\paragraph{1.2.2. Nguy cơ thay đổi dữ liệu trong quá trình xử lý
+ETL}\label{nguy-cux1a1-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-xux1eed-luxfd-etl}}
+
+ETL/ELT có thể làm sai lệch dữ liệu do lỗi transformation, lỗi join, lỗi
+type casting, xử lý null không nhất quán, deduplication sai khóa hoặc
+aggregation sai logic nghiệp vụ. Sai lệch trong ETL có tính lan truyền
+vì tầng dữ liệu sau phụ thuộc trực tiếp vào tầng dữ liệu trước.
+
+Kiểm soát toàn vẹn trong ETL cần ghi nhận trạng thái dữ liệu trước và
+sau mỗi transformation. Các chỉ số tối thiểu gồm record count, schema
+hash, batch hash và mô tả transformation.
+
+\hypertarget{nguy-cux1a1-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-lux1b0u-trux1eef-dux1eef-liux1ec7u}{%
+\paragraph{1.2.3. Nguy cơ thay đổi dữ liệu trong quá trình lưu trữ dữ
+liệu}\label{nguy-cux1a1-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-lux1b0u-trux1eef-dux1eef-liux1ec7u}}
+
+Dữ liệu đã lưu vẫn có thể bị thay đổi thông qua UPDATE, DELETE, INSERT,
+overwrite nhầm hoặc thao tác của người dùng có quyền cao. Nếu hệ thống
+chỉ lưu trạng thái hiện tại, quá trình kiểm toán không có cơ sở để xác
+định dữ liệu có còn khớp với thời điểm pipeline hoàn tất hay không.
+
+Một cơ chế audit có độ tin cậy cần tách bằng chứng kiểm chứng khỏi dữ
+liệu nghiệp vụ. Khi dữ liệu bị sửa, hệ thống tính lại fingerprint và so
+sánh với bằng chứng đã ghi.
+
+\hypertarget{nguy-cux1a1-tux1eeb-truy-cux1eadp-truxe1i-phuxe9p-vuxe0o-hux1ec7-thux1ed1ng-dux1eef-liux1ec7u}{%
+\paragraph{1.2.4. Nguy cơ từ truy cập trái phép vào hệ thống dữ
+liệu}\label{nguy-cux1a1-tux1eeb-truy-cux1eadp-truxe1i-phuxe9p-vuxe0o-hux1ec7-thux1ed1ng-dux1eef-liux1ec7u}}
+
+Threat Model của hệ thống cần xét cả dữ liệu nghiệp vụ và metadata kiểm
+chứng. Người tấn công hoặc insider threat có thể sửa dữ liệu, sửa log,
+sửa batch hash hoặc phá liên kết giữa các bản ghi kiểm chứng. Nếu ledger
+và dữ liệu nằm trong cùng một trust boundary, tài khoản quản trị cấp cao
+vẫn có khả năng thay đổi cả hai.
+
+Ràng buộc Zero Trust đặt ra yêu cầu: mọi trạng thái dữ liệu phải có bằng
+chứng kiểm chứng độc lập, mọi block kiểm chứng phải tự xác thực được
+payload, và mọi block sau phải ràng buộc với block trước thông qua hash.
+
+\hypertarget{tux1ed5ng-quan-vux1ec1-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u}{%
+\subsubsection{1.3. Tổng quan về cơ chế đảm bảo tính toàn vẹn dữ
+liệu}\label{tux1ed5ng-quan-vux1ec1-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u}}
+
+\hypertarget{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-bux1eb1ng-huxe0m-bux103m}{%
+\paragraph{1.3.1. Đảm bảo tính toàn vẹn dữ liệu bằng hàm
+băm}\label{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-bux1eb1ng-huxe0m-bux103m}}
+
+Hàm băm mật mã chuyển dữ liệu đầu vào có độ dài bất kỳ thành chuỗi đầu
+ra có độ dài cố định. SHA-256 tạo digest 256 bit, thường biểu diễn bằng
+64 ký tự hexadecimal. Các thuộc tính quan trọng gồm deterministic
+output, avalanche effect và khả năng chống tìm tiền ảnh trong phạm vi
+ứng dụng kiểm chứng dữ liệu.
+
+Trước khi băm, dữ liệu cần được canonicalize. Cùng một giá trị logic
+phải tạo cùng chuỗi biểu diễn bất kể khác biệt về kiểu dữ liệu,
+timezone, scale decimal hoặc thứ tự dictionary. Quy tắc canonicalization
+thường bao gồm:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Kiểu dữ liệu
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Quy tắc chuẩn hóa
+\end{minipage} \\
+\midrule()
+\endhead
+Null & Chuyển thành token cố định. \\
+Decimal & Dùng scale cố định. \\
+Timestamp & Dùng format thống nhất và timezone xác định. \\
+String & Escape ký tự phân cách và chuẩn hóa biểu diễn. \\
+Record & Sắp xếp theo thứ tự cột cố định. \\
+Batch & Sắp xếp row hash hoặc sort key ổn định trước khi tạo batch
+hash. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{kiux1ec3m-chux1ee9ng-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-xux1eed-luxfd-dux1eef-liux1ec7u}{%
+\paragraph{1.3.2. Kiểm chứng thay đổi dữ liệu trong hệ thống xử lý dữ
+liệu}\label{kiux1ec3m-chux1ee9ng-thay-ux111ux1ed5i-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-xux1eed-luxfd-dux1eef-liux1ec7u}}
+
+Kiểm chứng dữ liệu là quá trình tính lại fingerprint của dữ liệu hiện
+tại và so sánh với fingerprint đã lưu. Một cơ chế kiểm chứng đầy đủ cần
+thỏa mãn đồng thời tập điều kiện:
+
+\[
+\mathcal{V}(D_t, E_t) =
+\begin{cases}
+\text{VALID}, &
+\left|D_t\right| = E_{\text{count}}
+\land H(D_t) = E_{\text{hash}}
+\land S(D_t) = E_{\text{schema}} \\
+\text{INVALID}, & \text{otherwise}
+\end{cases}
+\]
+
+Record count phát hiện xóa hoặc chèn dòng. Batch hash phát hiện sửa nội
+dung khi số dòng không đổi. Schema hash phát hiện thay đổi cấu trúc dữ
+liệu.
+
+\hypertarget{vai-truxf2-cux1ee7a-kiux1ec3m-chux1ee9ng-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\paragraph{1.3.3. Vai trò của kiểm chứng dữ liệu trong hệ thống Data
+Pipeline}\label{vai-truxf2-cux1ee7a-kiux1ec3m-chux1ee9ng-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+Verification cung cấp bằng chứng kỹ thuật cho trạng thái dữ liệu sau
+pipeline. Hệ thống không chỉ tạo dữ liệu đầu ra, mà còn tạo được bằng
+chứng để xác định dữ liệu đầu ra có còn khớp với trạng thái đã ghi nhận
+hay không.
+
+Các trạng thái kiểm chứng cần rõ ràng để phục vụ monitoring và incident
+response:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule()
+\endhead
+\texttt{VALID} & Dữ liệu, record count, block hash và chain link hợp
+lệ. \\
+\texttt{DATA\_TAMPERED} & Batch hash hiện tại khác batch hash đã lưu. \\
+\texttt{RECORD\_COUNT\_MISMATCH} & Số bản ghi hiện tại khác số bản ghi
+đã lưu. \\
+\texttt{BLOCK\_TAMPERED} & Payload block bị thay đổi hoặc block hash
+không khớp. \\
+\texttt{CHAIN\_BROKEN} & \texttt{previous\_hash} không trỏ đúng block
+trước. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{tux1ed5ng-quan-vux1ec1-cux1a1-chux1ebf-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsubsection{1.4. Tổng quan về cơ chế truy vết dữ liệu trong hệ thống
+Data
+Pipeline}\label{tux1ed5ng-quan-vux1ec1-cux1a1-chux1ebf-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{khuxe1i-niux1ec7m-truy-vux1ebft-dux1eef-liux1ec7u-data-lineage}{%
+\paragraph{1.4.1. Khái niệm truy vết dữ liệu (Data
+Lineage)}\label{khuxe1i-niux1ec7m-truy-vux1ebft-dux1eef-liux1ec7u-data-lineage}}
+
+Data Lineage mô tả nguồn gốc, dòng di chuyển và lịch sử transformation
+của dữ liệu. Lineage trả lời các câu hỏi: dữ liệu đến từ đâu, đi qua
+transformation nào, được ghi vào đâu, chạy trong pipeline run nào và
+trạng thái xử lý ra sao.
+
+\hypertarget{vai-truxf2-cux1ee7a-truy-vux1ebft-dux1eef-liux1ec7u-trong-quux1ea3n-luxfd-dux1eef-liux1ec7u}{%
+\paragraph{1.4.2. Vai trò của truy vết dữ liệu trong quản lý dữ
+liệu}\label{vai-truxf2-cux1ee7a-truy-vux1ebft-dux1eef-liux1ec7u-trong-quux1ea3n-luxfd-dux1eef-liux1ec7u}}
+
+DAMA Data Governance xem lineage là nền tảng cho auditability, impact
+analysis, root cause analysis và regulatory compliance. Khi dữ liệu phân
+tích sai, lineage giúp xác định upstream source, transformation liên
+quan và downstream asset bị ảnh hưởng.
+
+Một lineage event tối thiểu cần chứa:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pipeline\_run\_id}
+\NormalTok{source\_stage}
+\NormalTok{target\_stage}
+\NormalTok{source\_table}
+\NormalTok{target\_table}
+\NormalTok{transformation\_name}
+\NormalTok{input\_record\_count}
+\NormalTok{output\_record\_count}
+\NormalTok{input\_batch\_hash}
+\NormalTok{output\_batch\_hash}
+\NormalTok{started\_at}
+\NormalTok{finished\_at}
+\NormalTok{status}
+\NormalTok{error\_message}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux1ee9ng-dux1ee5ng-truy-vux1ebft-dux1eef-liux1ec7u-trong-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{1.4.3. Ứng dụng truy vết dữ liệu trong phát hiện thay đổi dữ
+liệu}\label{ux1ee9ng-dux1ee5ng-truy-vux1ebft-dux1eef-liux1ec7u-trong-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Lineage cung cấp ngữ cảnh để giải thích kết quả verification. Batch hash
+xác định trạng thái dữ liệu bị sai lệch; lineage xác định
+transformation, stage và tài sản dữ liệu liên quan. Kết hợp hai cơ chế
+tạo thành chuỗi phân tích:
+
+\[
+\text{VerificationFailure}
+\rightarrow \text{FirstBrokenBlock}
+\rightarrow \text{PipelineStage}
+\rightarrow \text{LineageEvent}
+\rightarrow \text{TransformationContext}
+\]
+
+\hypertarget{tux1ed5ng-quan-vux1ec1-cuxf4ng-nghux1ec7-blockchain-trong-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u}{%
+\subsubsection{1.5. Tổng quan về công nghệ Blockchain trong đảm bảo tính
+toàn vẹn dữ
+liệu}\label{tux1ed5ng-quan-vux1ec1-cuxf4ng-nghux1ec7-blockchain-trong-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u}}
+
+\hypertarget{khuxe1i-niux1ec7m-cuxf4ng-nghux1ec7-blockchain}{%
+\paragraph{1.5.1. Khái niệm công nghệ
+Blockchain}\label{khuxe1i-niux1ec7m-cuxf4ng-nghux1ec7-blockchain}}
+
+Blockchain là cấu trúc dữ liệu gồm các block được liên kết tuần tự bằng
+hash. Mỗi block chứa payload, hash của block trước và hash của chính
+block hiện tại. Quan hệ băm có thể biểu diễn:
+
+\[
+H_n = \text{SHA256}(\text{Payload}_n \parallel H_{n-1})
+\]
+
+Trong bài toán Data Pipeline, block không nhất thiết lưu toàn bộ dữ
+liệu. Block có thể lưu fingerprint của dữ liệu, metadata transformation
+và liên kết tới block trước.
+
+\hypertarget{ux111ux1eb7c-tuxednh-bux1ea5t-biux1ebfn-dux1eef-liux1ec7u-cux1ee7a-blockchain}{%
+\paragraph{1.5.2. Đặc tính bất biến dữ liệu của
+Blockchain}\label{ux111ux1eb7c-tuxednh-bux1ea5t-biux1ebfn-dux1eef-liux1ec7u-cux1ee7a-blockchain}}
+
+Tính bất biến của Blockchain không đến từ việc dữ liệu không thể bị sửa
+ở tầng vật lý, mà từ khả năng phát hiện sửa đổi. Khi payload của block
+thay đổi, \texttt{block\_hash} tính lại sẽ khác giá trị đã lưu. Khi
+block trung gian bị thay đổi, toàn bộ chuỗi sau đó mất liên kết hợp lệ.
+
+Mức độ bất biến thực tế phụ thuộc trust boundary. Nếu ledger nằm trong
+cùng môi trường quản trị với dữ liệu, mô hình đạt mức tamper-evident nội
+bộ. Để tăng mức bảo đảm, hệ thống cần externalize ledger, ký số block
+hoặc lưu checkpoint hash trên hạ tầng độc lập.
+
+\hypertarget{khux1ea3-nux103ng-ux1ee9ng-dux1ee5ng-blockchain-trong-kiux1ec3m-chux1ee9ng-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u}{%
+\paragraph{1.5.3. Khả năng ứng dụng Blockchain trong kiểm chứng và truy
+vết dữ
+liệu}\label{khux1ea3-nux103ng-ux1ee9ng-dux1ee5ng-blockchain-trong-kiux1ec3m-chux1ee9ng-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u}}
+
+Blockchain phù hợp với Data Pipeline ở vai trò audit ledger: mỗi stage
+sinh một bằng chứng kiểm chứng, các bằng chứng được liên kết tuần tự, cơ
+chế xác thực toàn vẹn có thể phát hiện sai lệch trong dữ liệu, block
+payload hoặc chain link.
+
+Mô hình này hỗ trợ ba năng lực chính:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule()
+Năng lực & Cơ chế \\
+\midrule()
+\endhead
+Data Integrity & Batch hash, schema hash, record count. \\
+Tamper Evidence & Block hash và previous hash. \\
+Traceability & Pipeline run ID, stage metadata và lineage event. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{chux1b0ux1a1ng-2}{%
+\subsection{CHƯƠNG 2}\label{chux1b0ux1a1ng-2}}
+
+\hypertarget{phuxe2n-tuxedch-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline-dux1ef1a-truxean-cuxf4ng-nghux1ec7-blockchain}{%
+\subsection{PHÂN TÍCH CƠ CHẾ ĐẢM BẢO TÍNH TOÀN VẸN VÀ TRUY VẾT DỮ LIỆU
+TRONG HỆ THỐNG DATA PIPELINE DỰA TRÊN CÔNG NGHỆ
+BLOCKCHAIN}\label{phuxe2n-tuxedch-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline-dux1ef1a-truxean-cuxf4ng-nghux1ec7-blockchain}}
+
+\hypertarget{kiux1ebfn-truxfac-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsubsection{2.1. Kiến trúc đảm bảo tính toàn vẹn dữ liệu trong hệ
+thống Data
+Pipeline}\label{kiux1ebfn-truxfac-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-tux1ea1i-nguux1ed3n-dux1eef-liux1ec7u}{%
+\paragraph{2.1.1. Đảm bảo tính toàn vẹn dữ liệu tại nguồn dữ
+liệu}\label{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-tux1ea1i-nguux1ed3n-dux1eef-liux1ec7u}}
+
+Điểm tiếp nhận dữ liệu cần tạo bằng chứng cho trạng thái ban đầu trước
+khi dữ liệu bước vào transformation. Bằng chứng này gồm record count,
+schema fingerprint và batch hash. Trạng thái tại nguồn trở thành mốc gốc
+để đối chiếu các tầng xử lý sau.
+
+Kiểm chứng tại nguồn cần xử lý ba ràng buộc:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule()
+Ràng buộc & Cách kiểm soát \\
+\midrule()
+\endhead
+Tính đầy đủ & Đếm số bản ghi hoặc số event được ingest. \\
+Tính đúng schema & Lưu schema hash và validate trường bắt buộc. \\
+Tính không đổi & Sinh batch hash từ dữ liệu đã canonicalize. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-xux1eed-luxfd-etl}{%
+\paragraph{2.1.2. Đảm bảo tính toàn vẹn dữ liệu trong quá trình xử lý
+ETL}\label{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-xux1eed-luxfd-etl}}
+
+Mỗi transformation trong ETL phải tạo bằng chứng trạng thái đầu ra. Với
+pipeline nhiều tầng, bằng chứng ở tầng sau cần liên kết với bằng chứng ở
+tầng trước để tạo một chuỗi xử lý có thể kiểm toán.
+
+Quy trình kiểm soát:
+
+\[
+D_{\text{in}}
+\xrightarrow{\text{Validate}(schema, rules)}
+D_{\text{valid}}
+\xrightarrow{\text{Transform}}
+D_{\text{out}}
+\xrightarrow{\text{Hash} + \text{Metadata}}
+E_{\text{stage}}
+\xrightarrow{\text{Link}}
+B_n
+\]
+
+ETL integrity không chỉ kiểm tra dữ liệu cuối cùng. Cơ chế đúng phải xác
+định được stage nào tạo ra trạng thái sai lệch đầu tiên.
+
+\hypertarget{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-lux1b0u-trux1eef-dux1eef-liux1ec7u}{%
+\paragraph{2.1.3. Đảm bảo tính toàn vẹn dữ liệu trong quá trình lưu trữ
+dữ
+liệu}\label{ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-quuxe1-truxecnh-lux1b0u-trux1eef-dux1eef-liux1ec7u}}
+
+Lớp lưu trữ cần hỗ trợ kiểm chứng sau khi pipeline đã hoàn tất. Tại thời
+điểm verification, hệ thống đọc dữ liệu hiện tại, tính lại fingerprint
+và so sánh với ledger. Kết quả kiểm chứng được ghi thành lịch sử audit
+để phân tích theo thời gian.
+
+Mô hình trạng thái:
+
+\[
+\text{StoredEvidence} \oplus \text{CurrentDataState}
+\rightarrow \text{IntegrityVerification}
+\rightarrow \text{VerificationResult}
+\]
+
+\hypertarget{phuxe2n-tuxedch-cux1a1-chux1ebf-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsubsection{2.2. Phân tích cơ chế truy vết dữ liệu trong hệ thống
+Data
+Pipeline}\label{phuxe2n-tuxedch-cux1a1-chux1ebf-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{truy-vux1ebft-dux1eef-liux1ec7u-theo-luux1ed3ng-xux1eed-luxfd-dux1eef-liux1ec7u}{%
+\paragraph{2.2.1. Truy vết dữ liệu theo luồng xử lý dữ
+liệu}\label{truy-vux1ebft-dux1eef-liux1ec7u-theo-luux1ed3ng-xux1eed-luxfd-dux1eef-liux1ec7u}}
+
+Lineage theo luồng xử lý ghi nhận quan hệ upstream/downstream giữa các
+stage. Mỗi edge trong lineage graph biểu diễn một transformation:
+
+\[
+\text{Stage}_A \xrightarrow{\text{transformation}} \text{Stage}_B
+\]
+
+Thông tin bắt buộc gồm source, target, transformation name, thời điểm
+chạy, trạng thái và pipeline run ID.
+
+\hypertarget{truy-vux1ebft-dux1eef-liux1ec7u-theo-lux1ecbch-sux1eed-biux1ebfn-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{2.2.2. Truy vết dữ liệu theo lịch sử biến đổi dữ
+liệu}\label{truy-vux1ebft-dux1eef-liux1ec7u-theo-lux1ecbch-sux1eed-biux1ebfn-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Lịch sử biến đổi dữ liệu cần lưu cả metadata kỹ thuật và metadata nghiệp
+vụ. Metadata kỹ thuật gồm record count, batch hash, schema hash,
+execution time và status. Metadata nghiệp vụ gồm tên transformation, mô
+tả logic xử lý và mục tiêu dữ liệu đầu ra.
+
+Thiết kế lineage cần hỗ trợ hai truy vấn:
+
+\[
+\text{ForwardLineage}(S) = \{T \mid S \leadsto T\}
+\]
+
+\[
+\text{BackwardLineage}(O) = \{U \mid U \leadsto O\}
+\]
+
+\hypertarget{truy-vux1ebft-dux1eef-liux1ec7u-phux1ee5c-vux1ee5-kiux1ec3m-chux1ee9ng-thay-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{2.2.3. Truy vết dữ liệu phục vụ kiểm chứng thay đổi dữ
+liệu}\label{truy-vux1ebft-dux1eef-liux1ec7u-phux1ee5c-vux1ee5-kiux1ec3m-chux1ee9ng-thay-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Khi verification trả về lỗi, lineage hỗ trợ khoanh vùng phạm vi:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Kết quả verification
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cách dùng lineage
+\end{minipage} \\
+\midrule()
+\endhead
+\texttt{DATA\_TAMPERED} & Xác định stage và transformation tạo dữ liệu
+bị sai lệch. \\
+\texttt{RECORD\_COUNT\_MISMATCH} & So sánh input/output record count của
+transformation liên quan. \\
+\texttt{BLOCK\_TAMPERED} & Kiểm tra metadata transformation bị sửa. \\
+\texttt{CHAIN\_BROKEN} & Xác định vị trí đứt trong chuỗi stage. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{phuxe2n-tuxedch-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-bux1ea5t-biux1ebfn-dux1eef-liux1ec7u-bux1eb1ng-blockchain}{%
+\subsubsection{2.3. Phân tích cơ chế đảm bảo tính bất biến dữ liệu bằng
+Blockchain}\label{phuxe2n-tuxedch-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-bux1ea5t-biux1ebfn-dux1eef-liux1ec7u-bux1eb1ng-blockchain}}
+
+\hypertarget{cux1a1-chux1ebf-liuxean-kux1ebft-khux1ed1i-dux1eef-liux1ec7u-bux1eb1ng-huxe0m-bux103m}{%
+\paragraph{2.3.1. Cơ chế liên kết khối dữ liệu bằng hàm
+băm}\label{cux1a1-chux1ebf-liuxean-kux1ebft-khux1ed1i-dux1eef-liux1ec7u-bux1eb1ng-huxe0m-bux103m}}
+
+Mỗi block kiểm chứng chứa payload đại diện cho trạng thái một stage.
+Công thức tổng quát:
+
+\[
+\text{Payload}_n =
+\text{Canonicalize}(\text{stage\_metadata}, \text{record\_count},
+\text{batch\_hash}, \text{schema\_hash}, \text{transformation})
+\]
+
+\[
+\text{BlockHash}_n =
+\text{SHA256}(\text{Payload}_n \parallel \text{PreviousHash}_n)
+\]
+
+\[
+\text{PreviousHash}_n = \text{BlockHash}_{n-1}
+\]
+
+Genesis block sử dụng previous hash cố định:
+
+\[
+\text{PreviousHash}_0 =
+\texttt{0000000000000000000000000000000000000000000000000000000000000000}
+\]
+
+\hypertarget{cux1a1-chux1ebf-kiux1ec3m-chux1ee9ng-dux1eef-liux1ec7u-bux1eb1ng-blockchain}{%
+\paragraph{2.3.2. Cơ chế kiểm chứng dữ liệu bằng
+Blockchain}\label{cux1a1-chux1ebf-kiux1ec3m-chux1ee9ng-dux1eef-liux1ec7u-bux1eb1ng-blockchain}}
+
+Verification engine kiểm tra bốn điều kiện:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule()
+Điều kiện & Lỗi phát hiện \\
+\midrule()
+\endhead
+Current record count khớp ledger & Xóa hoặc chèn dữ liệu. \\
+Current batch hash khớp ledger & Sửa nội dung dữ liệu. \\
+Recalculated block hash khớp ledger & Sửa metadata block. \\
+Current previous hash khớp block trước & Phá liên kết chuỗi. \\
+\bottomrule()
+\end{longtable}
+
+Điều kiện được kiểm tra theo thứ tự block index để xác định first broken
+block.
+
+\hypertarget{vai-truxf2-cux1ee7a-blockchain-trong-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-truxe1i-phuxe9p-dux1eef-liux1ec7u}{%
+\paragraph{2.3.3. Vai trò của Blockchain trong phát hiện thay đổi trái
+phép dữ
+liệu}\label{vai-truxf2-cux1ee7a-blockchain-trong-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-truxe1i-phuxe9p-dux1eef-liux1ec7u}}
+
+Hash chain biến mỗi stage thành một điểm kiểm chứng có ràng buộc toán
+học với stage trước đó. Người tấn công không thể sửa một block mà không
+làm thay đổi block hash; sửa previous hash sẽ làm đứt chain link; sửa dữ
+liệu sẽ làm batch hash hiện tại khác bằng chứng đã lưu.
+
+\hypertarget{phuxe2n-tuxedch-muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsubsection{2.4. Phân tích mô hình tích hợp Blockchain trong hệ thống
+Data
+Pipeline}\label{phuxe2n-tuxedch-muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-tux1ea1i-tux1ea7ng-thu-thux1eadp-dux1eef-liux1ec7u}{%
+\paragraph{2.4.1. Mô hình tích hợp Blockchain tại tầng thu thập dữ
+liệu}\label{muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-tux1ea1i-tux1ea7ng-thu-thux1eadp-dux1eef-liux1ec7u}}
+
+Tầng thu thập tạo block đầu tiên cho dữ liệu vừa ingest. Block này đóng
+vai trò baseline evidence. Mọi transformation sau đó phải liên kết tới
+baseline này thông qua hash chain.
+
+\hypertarget{muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-tux1ea1i-tux1ea7ng-xux1eed-luxfd-dux1eef-liux1ec7u}{%
+\paragraph{2.4.2. Mô hình tích hợp Blockchain tại tầng xử lý dữ
+liệu}\label{muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-tux1ea1i-tux1ea7ng-xux1eed-luxfd-dux1eef-liux1ec7u}}
+
+Tầng xử lý tạo block sau mỗi transformation chính. Thiết kế này giúp
+verification xác định chính xác stage đầu tiên bị sai lệch thay vì chỉ
+phát hiện sai lệch ở output cuối.
+
+\hypertarget{muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-tux1ea1i-tux1ea7ng-lux1b0u-trux1eef-dux1eef-liux1ec7u}{%
+\paragraph{2.4.3. Mô hình tích hợp Blockchain tại tầng lưu trữ dữ
+liệu}\label{muxf4-huxecnh-tuxedch-hux1ee3p-blockchain-tux1ea1i-tux1ea7ng-lux1b0u-trux1eef-dux1eef-liux1ec7u}}
+
+Tầng lưu trữ phân tích tạo block cho curated hoặc aggregated dataset.
+Đây là lớp trực tiếp phục vụ dashboard và báo cáo, nên verification tại
+tầng này bảo vệ tính đúng đắn của chỉ số phân tích.
+
+\hypertarget{phuxe2n-tuxedch-yuxeau-cux1ea7u-xuxe2y-dux1ef1ng-muxf4-huxecnh-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u}{%
+\subsubsection{2.5. Phân tích yêu cầu xây dựng mô hình đảm bảo tính toàn
+vẹn và truy vết dữ
+liệu}\label{phuxe2n-tuxedch-yuxeau-cux1ea7u-xuxe2y-dux1ef1ng-muxf4-huxecnh-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u}}
+
+\hypertarget{yuxeau-cux1ea7u-vux1ec1-hiux1ec7u-nux103ng-hux1ec7-thux1ed1ng}{%
+\paragraph{2.5.1. Yêu cầu về hiệu năng hệ
+thống}\label{yuxeau-cux1ea7u-vux1ec1-hiux1ec7u-nux103ng-hux1ec7-thux1ed1ng}}
+
+Cơ chế kiểm chứng tạo chi phí tính toán bổ sung. Benchmark cần đo tối
+thiểu ba nhóm Duration:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Chỉ số
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ý nghĩa
+\end{minipage} \\
+\midrule()
+\endhead
+Baseline Duration & Thời gian chạy pipeline không có
+ledger/verification. \\
+Secured Duration & Thời gian chạy pipeline có hashing và ledger. \\
+Verification Duration & Thời gian kiểm chứng dữ liệu hiện tại so với
+ledger. \\
+Overhead & Phần chi phí tăng thêm khi bổ sung cơ chế bảo mật. \\
+\bottomrule()
+\end{longtable}
+
+Công thức:
+
+\[
+\text{Overhead}(\%) =
+\frac{\text{secured\_duration\_ms} - \text{baseline\_duration\_ms}}
+{\text{baseline\_duration\_ms}}
+\times 100
+\]
+
+\hypertarget{yuxeau-cux1ea7u-vux1ec1-khux1ea3-nux103ng-mux1edf-rux1ed9ng-hux1ec7-thux1ed1ng}{%
+\paragraph{2.5.2. Yêu cầu về khả năng mở rộng hệ
+thống}\label{yuxeau-cux1ea7u-vux1ec1-khux1ea3-nux103ng-mux1edf-rux1ed9ng-hux1ec7-thux1ed1ng}}
+
+Batch hash phải deterministic nhưng không được phụ thuộc Spark partition
+order. Với dữ liệu lớn, thiết kế nên dùng partition-level hash hoặc
+Merkle Tree để giảm áp lực lên Driver. Mô hình MVP có thể dùng cách tính
+đơn giản hơn nếu dataset nằm trong giới hạn thử nghiệm, nhưng tài liệu
+cần nêu rõ giới hạn đó.
+
+\hypertarget{yuxeau-cux1ea7u-vux1ec1-khux1ea3-nux103ng-kiux1ec3m-chux1ee9ng-dux1eef-liux1ec7u}{%
+\paragraph{2.5.3. Yêu cầu về khả năng kiểm chứng dữ
+liệu}\label{yuxeau-cux1ea7u-vux1ec1-khux1ea3-nux103ng-kiux1ec3m-chux1ee9ng-dux1eef-liux1ec7u}}
+
+Hệ thống cần trả lời được bảy câu hỏi kiểm chứng:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Dữ liệu hiện tại có khớp batch hash đã lưu không?
+\item
+  Record count hiện tại có khớp record count đã lưu không?
+\item
+  Schema hiện tại có khớp schema hash đã lưu không?
+\item
+  Payload block có bị sửa không?
+\item
+  Chain link có bị đứt không?
+\item
+  First broken block là block nào?
+\item
+  Pipeline run nào và stage nào bị ảnh hưởng?
+\end{enumerate}
+
+\hypertarget{chux1b0ux1a1ng-3}{%
+\subsection{CHƯƠNG 3}\label{chux1b0ux1a1ng-3}}
+
+\hypertarget{xuxe2y-dux1ef1ng-muxf4-huxecnh-ux1ee9ng-dux1ee5ng-blockchain-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}{%
+\subsection{XÂY DỰNG MÔ HÌNH ỨNG DỤNG BLOCKCHAIN ĐẢM BẢO TÍNH TOÀN VẸN
+VÀ TRUY VẾT DỮ LIỆU TRONG HỆ THỐNG DATA
+PIPELINE}\label{xuxe2y-dux1ef1ng-muxf4-huxecnh-ux1ee9ng-dux1ee5ng-blockchain-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-vuxe0-truy-vux1ebft-dux1eef-liux1ec7u-trong-hux1ec7-thux1ed1ng-data-pipeline}}
+
+\hypertarget{ux111ux1ec1-xuux1ea5t-kiux1ebfn-truxfac-tux1ed5ng-thux1ec3-muxf4-huxecnh}{%
+\subsubsection{3.1. Đề xuất kiến trúc tổng thể mô
+hình}\label{ux111ux1ec1-xuux1ea5t-kiux1ebfn-truxfac-tux1ed5ng-thux1ec3-muxf4-huxecnh}}
+
+\hypertarget{kiux1ebfn-truxfac-hux1ec7-thux1ed1ng-data-pipeline-thux1eed-nghiux1ec7m}{%
+\paragraph{3.1.1. Kiến trúc hệ thống Data Pipeline thử
+nghiệm}\label{kiux1ebfn-truxfac-hux1ec7-thux1ed1ng-data-pipeline-thux1eed-nghiux1ec7m}}
+
+Mô hình thử nghiệm được triển khai trên Databricks với Python, PySpark,
+SQL và Delta Table. Dataset là dữ liệu giao dịch giả lập, sinh bằng seed
+cố định để tái lập kết quả. Pipeline vật lý gồm bốn bảng:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{source\_transactions}
+\NormalTok{        |}
+\NormalTok{        v}
+\NormalTok{bronze\_transactions}
+\NormalTok{        |}
+\NormalTok{        v}
+\NormalTok{silver\_transactions}
+\NormalTok{        |}
+\NormalTok{        v}
+\NormalTok{gold\_daily\_summary}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Tầng
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vai trò triển khai
+\end{minipage} \\
+\midrule()
+\endhead
+Source & Lưu dữ liệu giao dịch giả lập. \\
+Bronze & Bổ sung \texttt{pipeline\_run\_id}, \texttt{ingestion\_time},
+\texttt{source\_table}. \\
+Silver & Deduplicate, validate, normalize kiểu dữ liệu và tính lại
+\texttt{amount}. \\
+Gold & Tổng hợp theo \texttt{transaction\_date} và \texttt{product}. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{kiux1ebfn-truxfac-tuxedch-hux1ee3p-blockchain-trong-hux1ec7-thux1ed1ng}{%
+\paragraph{3.1.2. Kiến trúc tích hợp Blockchain trong hệ
+thống}\label{kiux1ebfn-truxfac-tuxedch-hux1ee3p-blockchain-trong-hux1ec7-thux1ed1ng}}
+
+Mỗi pipeline run tạo bốn block trong \texttt{blockchain\_ledger}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SOURCE {-}\textgreater{} BRONZE {-}\textgreater{} SILVER {-}\textgreater{} GOLD}
+\end{Highlighting}
+\end{Shaded}
+
+Block lưu stage metadata, target table, record count, batch hash, schema
+hash, transformation, previous hash, block hash và created time. Block
+SOURCE là genesis block với previous hash gồm 64 ký tự \texttt{0}; các
+block sau trỏ tới block hash của stage trước.
+
+\hypertarget{thuxe0nh-phux1ea7n-kiux1ec3m-chux1ee9ng-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u}{%
+\paragraph{3.1.3. Thành phần kiểm chứng tính toàn vẹn dữ
+liệu}\label{thuxe0nh-phux1ea7n-kiux1ec3m-chux1ee9ng-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Module
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Chức năng
+\end{minipage} \\
+\midrule()
+\endhead
+\texttt{canonicalization.py} & Chuẩn hóa null, decimal, timestamp,
+string và record trước khi hash. \\
+\texttt{hashing.py} & Tính row hash, schema hash và batch hash. \\
+\texttt{models.py} & Định nghĩa \texttt{LedgerBlock} và payload
+block. \\
+\texttt{ledger.py} & Tạo block, tính block hash, ghi và đọc ledger. \\
+\texttt{pipeline.py} & Xử lý Source -\textgreater{} Bronze
+-\textgreater{} Silver -\textgreater{} Gold. \\
+\texttt{lineage.py} & Ghi lineage event SUCCESS/FAILED. \\
+\texttt{verification.py} & Kiểm tra record count, data hash, block hash
+và chain link. \\
+\texttt{tamper.py} & Cài đặt tamper scenarios và reset baseline. \\
+\texttt{metrics.py} & Tính benchmark metrics và overhead. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{xuxe2y-dux1ef1ng-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-muxf4-huxecnh-ux111ux1ec1-xuux1ea5t}{%
+\subsubsection{3.2. Xây dựng cơ chế đảm bảo tính toàn vẹn dữ liệu trong
+mô hình đề
+xuất}\label{xuxe2y-dux1ef1ng-cux1a1-chux1ebf-ux111ux1ea3m-bux1ea3o-tuxednh-touxe0n-vux1eb9n-dux1eef-liux1ec7u-trong-muxf4-huxecnh-ux111ux1ec1-xuux1ea5t}}
+
+\hypertarget{sinh-giuxe1-trux1ecb-bux103m-dux1eef-liux1ec7u-tux1ea1i-cuxe1c-ux111iux1ec3m-xux1eed-luxfd}{%
+\paragraph{3.2.1. Sinh giá trị băm dữ liệu tại các điểm xử
+lý}\label{sinh-giuxe1-trux1ecb-bux103m-dux1eef-liux1ec7u-tux1ea1i-cuxe1c-ux111iux1ec3m-xux1eed-luxfd}}
+
+Mỗi stage sinh một batch hash từ dữ liệu đã canonicalize. Các cột được
+xử lý theo thứ tự ổn định; batch hash được tính theo thứ tự dòng xác
+định để loại bỏ phụ thuộc vào Spark partition order.
+
+Các điểm sinh hash:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Stage
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sort key kiểm chứng
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mục tiêu
+\end{minipage} \\
+\midrule()
+\endhead
+SOURCE & \texttt{transaction\_id} & Ghi nhận snapshot dữ liệu đầu
+vào. \\
+BRONZE & \texttt{transaction\_id} & Ghi nhận dữ liệu sau Ingestion
+metadata. \\
+SILVER & \texttt{transaction\_id} & Ghi nhận dữ liệu sau validation và
+normalization. \\
+GOLD & \texttt{transaction\_date}, \texttt{product} & Ghi nhận dữ liệu
+tổng hợp. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{lux1b0u-trux1eef-giuxe1-trux1ecb-kiux1ec3m-chux1ee9ng-truxean-blockchain}{%
+\paragraph{3.2.2. Lưu trữ giá trị kiểm chứng trên
+Blockchain}\label{lux1b0u-trux1eef-giuxe1-trux1ecb-kiux1ec3m-chux1ee9ng-truxean-blockchain}}
+
+Ledger lưu bằng chứng kiểm chứng trong bảng \texttt{blockchain\_ledger}.
+Payload block không bao gồm \texttt{block\_hash}; \texttt{block\_hash}
+được tính từ payload đã canonicalize. Cấu trúc này cho phép phát hiện
+thay đổi trong payload.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{block\_hash = SHA256(canonicalized\_block\_payload)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{kiux1ec3m-tra-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{3.2.3. Kiểm tra phát hiện thay đổi dữ
+liệu}\label{kiux1ec3m-tra-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Notebook \texttt{05\_verify\_integrity.py} gọi verification engine để
+đọc block theo \texttt{pipeline\_run\_id}, tính lại trạng thái dữ liệu
+hiện tại và ghi kết quả vào \texttt{verification\_results}.
+
+Quy tắc phát hiện:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Điều kiện sai lệch
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái
+\end{minipage} \\
+\midrule()
+\endhead
+\texttt{actual\_record\_count\ !=\ expected\_record\_count} &
+\texttt{RECORD\_COUNT\_MISMATCH} \\
+\texttt{actual\_batch\_hash\ !=\ expected\_batch\_hash} &
+\texttt{DATA\_TAMPERED} \\
+\texttt{recalculated\_block\_hash\ !=\ stored\_block\_hash} &
+\texttt{BLOCK\_TAMPERED} \\
+\texttt{previous\_hash\ !=\ previous.block\_hash} &
+\texttt{CHAIN\_BROKEN} \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{xuxe2y-dux1ef1ng-cux1a1-chux1ebf-truy-vux1ebft-dux1eef-liux1ec7u-trong-muxf4-huxecnh-ux111ux1ec1-xuux1ea5t}{%
+\subsubsection{3.3. Xây dựng cơ chế truy vết dữ liệu trong mô hình đề
+xuất}\label{xuxe2y-dux1ef1ng-cux1a1-chux1ebf-truy-vux1ebft-dux1eef-liux1ec7u-trong-muxf4-huxecnh-ux111ux1ec1-xuux1ea5t}}
+
+\hypertarget{ghi-nhux1eadn-lux1ecbch-sux1eed-biux1ebfn-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{3.3.1. Ghi nhận lịch sử biến đổi dữ
+liệu}\label{ghi-nhux1eadn-lux1ecbch-sux1eed-biux1ebfn-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Bảng \texttt{lineage\_events} lưu lineage event cho từng transformation.
+Event bao gồm pipeline run ID, source stage, target stage, source table,
+target table, transformation name, input/output record count,
+input/output batch hash, execution time, status và error message.
+
+\hypertarget{lux1b0u-trux1eef-thuxf4ng-tin-truy-vux1ebft-truxean-blockchain}{%
+\paragraph{3.3.2. Lưu trữ thông tin truy vết trên
+Blockchain}\label{lux1b0u-trux1eef-thuxf4ng-tin-truy-vux1ebft-truxean-blockchain}}
+
+MVP tách hai loại thông tin:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Thành phần
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung lưu
+\end{minipage} \\
+\midrule()
+\endhead
+\texttt{blockchain\_ledger} & Bằng chứng toàn vẹn, hash, record count,
+schema hash, block link. \\
+\texttt{lineage\_events} & Ngữ cảnh xử lý, transformation,
+source/target, thời gian, trạng thái. \\
+\bottomrule()
+\end{longtable}
+
+Ledger không thay thế lineage. Ledger cung cấp bằng chứng kiểm chứng;
+lineage cung cấp bối cảnh giải thích.
+
+\hypertarget{kiux1ec3m-chux1ee9ng-lux1ecbch-sux1eed-biux1ebfn-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{3.3.3. Kiểm chứng lịch sử biến đổi dữ
+liệu}\label{kiux1ec3m-chux1ee9ng-lux1ecbch-sux1eed-biux1ebfn-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Lịch sử biến đổi được kiểm chứng thông qua quan hệ giữa output batch
+hash của lineage và batch hash trong ledger. Khi output data bị sửa,
+verification phát hiện batch hash sai lệch. Khi metadata transformation
+trong block bị sửa, block hash không còn hợp lệ.
+
+\hypertarget{xuxe2y-dux1ef1ng-muxf4-huxecnh-thux1eed-nghiux1ec7m-hux1ec7-thux1ed1ng}{%
+\subsubsection{3.4. Xây dựng mô hình thử nghiệm hệ
+thống}\label{xuxe2y-dux1ef1ng-muxf4-huxecnh-thux1eed-nghiux1ec7m-hux1ec7-thux1ed1ng}}
+
+\hypertarget{muxf4i-trux1b0ux1eddng-triux1ec3n-khai-thux1eed-nghiux1ec7m}{%
+\paragraph{3.4.1. Môi trường triển khai thử
+nghiệm}\label{muxf4i-trux1b0ux1eddng-triux1ec3n-khai-thux1eed-nghiux1ec7m}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule()
+Thành phần & Công nghệ \\
+\midrule()
+\endhead
+Nền tảng & Databricks Free Edition \\
+Ngôn ngữ & Python, PySpark, SQL \\
+Lưu trữ & Delta Table \\
+Hash & SHA-256 \\
+Pipeline & Source -\textgreater{} Bronze -\textgreater{} Silver
+-\textgreater{} Gold \\
+Ledger & \texttt{blockchain\_ledger} \\
+Lineage & \texttt{lineage\_events} \\
+Verification output & \texttt{verification\_results} \\
+Benchmark output & \texttt{experiment\_metrics} \\
+Dashboard & Databricks SQL dashboard \\
+\bottomrule()
+\end{longtable}
+
+Thứ tự notebook:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{00\_setup\_environment.py}
+\NormalTok{01\_generate\_source\_data.py}
+\NormalTok{02\_bronze\_ingestion.py}
+\NormalTok{03\_silver\_transformation.py}
+\NormalTok{04\_gold\_aggregation.py}
+\NormalTok{05\_verify\_integrity.py}
+\NormalTok{06\_run\_tamper\_scenarios.py}
+\NormalTok{07\_experiment\_and\_metrics.py}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{xuxe2y-dux1ef1ng-kux1ecbch-bux1ea3n-kiux1ec3m-thux1eed-thay-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{3.4.2. Xây dựng kịch bản kiểm thử thay đổi dữ
+liệu}\label{xuxe2y-dux1ef1ng-kux1ecbch-bux1ea3n-kiux1ec3m-thux1eed-thay-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Kịch bản
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vector tấn công
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái kỳ vọng
+\end{minipage} \\
+\midrule()
+\endhead
+\texttt{NONE} & Không sửa dữ liệu & \texttt{VALID} \\
+\texttt{MODIFY\_TRANSACTION\_AMOUNT} & Sửa giá trị giao dịch &
+\texttt{DATA\_TAMPERED} \\
+\texttt{DELETE\_TRANSACTION} & Xóa một dòng dữ liệu &
+\texttt{RECORD\_COUNT\_MISMATCH} \\
+\texttt{INSERT\_FAKE\_TRANSACTION} & Chèn dòng giả &
+\texttt{RECORD\_COUNT\_MISMATCH} \\
+\texttt{MODIFY\_LEDGER\_BATCH\_HASH} & Sửa batch hash trong ledger &
+\texttt{DATA\_TAMPERED} \\
+\texttt{MODIFY\_LEDGER\_TRANSFORMATION} & Sửa metadata transformation &
+\texttt{BLOCK\_TAMPERED} \\
+\texttt{MODIFY\_LEDGER\_PREVIOUS\_HASH} & Sửa liên kết block &
+\texttt{CHAIN\_BROKEN} \\
+\texttt{RESET\_BASELINE} & Tạo lại run sạch & \texttt{VALID} \\
+\bottomrule()
+\end{longtable}
+
+Notebook tamper yêu cầu widget \texttt{CONFIRM\_TAMPER\ =\ YES} để tránh
+thao tác phá dữ liệu ngoài ý muốn.
+
+\hypertarget{triux1ec3n-khai-thux1eed-nghiux1ec7m-muxf4-huxecnh-ux111ux1ec1-xuux1ea5t}{%
+\paragraph{3.4.3. Triển khai thử nghiệm mô hình đề
+xuất}\label{triux1ec3n-khai-thux1eed-nghiux1ec7m-muxf4-huxecnh-ux111ux1ec1-xuux1ea5t}}
+
+Dashboard export từ Databricks tại thời điểm \textbf{2026-06-20 08:15
+UTC} ghi nhận kết quả sau:
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule()
+KPI & Giá trị \\
+\midrule()
+\endhead
+Tổng số pipeline runs & 15 \\
+Tổng số ledger blocks & 60 \\
+Số block xác thực thành công & 56 \\
+Số pipeline runs có kết quả verification trên dashboard & 14 \\
+Số runs phát hiện lỗi trong dashboard hiện tại & 0 \\
+Số runs không phát hiện lỗi trong dashboard hiện tại & 14 \\
+Tỉ lệ lỗi hiển thị trên dashboard & 0,00\% \\
+\bottomrule()
+\end{longtable}
+
+Ledger overview cho thấy mỗi pipeline run sinh 4 block theo thứ tự
+SOURCE, BRONZE, SILVER và GOLD. Với run benchmark 50.000 records,
+SOURCE, BRONZE và SILVER đều ghi nhận 50.000 records; GOLD ghi nhận
+1.825 records sau aggregation theo ngày và sản phẩm.
+
+Lineage mẫu trên dashboard:
+
+\begin{longtable}[]{@{}lrrl@{}}
+\toprule()
+Luồng xử lý & Input records & Output records & Status \\
+\midrule()
+\endhead
+SOURCE -\textgreater{} BRONZE & 10.000 & 10.000 & SUCCESS \\
+BRONZE -\textgreater{} SILVER & 10.000 & 10.000 & SUCCESS \\
+SILVER -\textgreater{} GOLD & 10.000 & 1.825 & SUCCESS \\
+\bottomrule()
+\end{longtable}
+
+Verification latency trong các dòng gần nhất dao động từ 24.000 ms đến
+31.000 ms. Lịch sử dashboard có một điểm latency lớn bất thường, phản
+ánh ảnh hưởng của cold start hoặc thời gian chờ compute. Benchmark cần
+tách warm-up khỏi các lần đo chính để tránh làm lệch kết luận.
+
+\hypertarget{ux111uxe1nh-giuxe1-hiux1ec7u-quux1ea3-muxf4-huxecnh}{%
+\subsubsection{3.5. Đánh giá hiệu quả mô
+hình}\label{ux111uxe1nh-giuxe1-hiux1ec7u-quux1ea3-muxf4-huxecnh}}
+
+\hypertarget{ux111uxe1nh-giuxe1-khux1ea3-nux103ng-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-dux1eef-liux1ec7u}{%
+\paragraph{3.5.1. Đánh giá khả năng phát hiện thay đổi dữ
+liệu}\label{ux111uxe1nh-giuxe1-khux1ea3-nux103ng-phuxe1t-hiux1ec7n-thay-ux111ux1ed5i-dux1eef-liux1ec7u}}
+
+Verification engine phát hiện bốn nhóm sai lệch:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Nhóm sai lệch
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cơ chế phát hiện
+\end{minipage} \\
+\midrule()
+\endhead
+Sửa nội dung dữ liệu & Batch hash hiện tại khác batch hash đã lưu. \\
+Xóa hoặc chèn dữ liệu & Record count hiện tại khác record count đã
+lưu. \\
+Sửa metadata block & Recalculated block hash khác stored block hash. \\
+Sửa liên kết chuỗi & \texttt{previous\_hash} không khớp block hash của
+block trước. \\
+\bottomrule()
+\end{longtable}
+
+Dashboard export hiện tại đang ở trạng thái sạch: không có tamper event,
+không có first broken block và 14/14 runs hiển thị không phát hiện lỗi.
+
+\begin{longtable}[]{@{}lr@{}}
+\toprule()
+Chỉ số phát hiện & Giá trị \\
+\midrule()
+\endhead
+Tổng số verification runs & 14 \\
+Runs có phát hiện lỗi & 0 \\
+Runs không phát hiện lỗi & 14 \\
+First broken block & Không có \\
+Tamper event & Không có \\
+\bottomrule()
+\end{longtable}
+
+Kết quả trên xác nhận trạng thái pipeline sạch sau reset hoặc benchmark.
+Các tamper scenarios trong notebook vẫn là bộ kiểm thử trực tiếp để
+chứng minh các trạng thái lỗi khi cần trình bày.
+
+\hypertarget{ux111uxe1nh-giuxe1-khux1ea3-nux103ng-truy-vux1ebft-dux1eef-liux1ec7u}{%
+\paragraph{3.5.2. Đánh giá khả năng truy vết dữ
+liệu}\label{ux111uxe1nh-giuxe1-khux1ea3-nux103ng-truy-vux1ebft-dux1eef-liux1ec7u}}
+
+Lineage events ghi nhận đầy đủ đường đi SOURCE -\textgreater{} BRONZE
+-\textgreater{} SILVER -\textgreater{} GOLD theo pipeline run ID. Record
+count đầu vào/đầu ra cho thấy transformation GOLD giảm dữ liệu từ 10.000
+records xuống 1.825 records do aggregation. Chỉ số này nhất quán với vai
+trò của Gold layer trong Medallion Architecture.
+
+Khi verification phát hiện lỗi, người vận hành dùng
+\texttt{pipeline\_run\_id}, \texttt{pipeline\_stage} và first broken
+block để truy về lineage event tương ứng. Quy trình phân tích:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{verification\_results}
+\NormalTok{    {-}\textgreater{} first broken block}
+\NormalTok{    {-}\textgreater{} pipeline\_run\_id + stage}
+\NormalTok{    {-}\textgreater{} lineage\_events}
+\NormalTok{    {-}\textgreater{} source/target table + transformation context}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux111uxe1nh-giuxe1-khux1ea3-nux103ng-uxe1p-dux1ee5ng-trong-hux1ec7-thux1ed1ng-thux1ef1c-tux1ebf}{%
+\paragraph{3.5.3. Đánh giá khả năng áp dụng trong hệ thống thực
+tế}\label{ux111uxe1nh-giuxe1-khux1ea3-nux103ng-uxe1p-dux1ee5ng-trong-hux1ec7-thux1ed1ng-thux1ef1c-tux1ebf}}
+
+Mô hình phù hợp với các hệ thống cần auditability, phát hiện thay đổi dữ
+liệu sau xử lý và truy vết transformation theo pipeline run. Kiến trúc
+có thể tích hợp vào pipeline hiện có vì không yêu cầu thay đổi toàn bộ
+dữ liệu nghiệp vụ; hệ thống chỉ bổ sung lớp evidence gồm hash, ledger,
+lineage và verification result.
+
+Benchmark dashboard cho thấy Security Overhead tăng theo kích thước dữ
+liệu. PDF export chỉ hiển thị biểu đồ cột, không hiển thị duration chi
+tiết; bảng dưới ghi nhận giá trị xấp xỉ theo biểu đồ, số liệu chính xác
+cần truy vấn trực tiếp từ \texttt{experiment\_metrics}.
+
+\begin{longtable}[]{@{}rlr@{}}
+\toprule()
+Record count & Quan sát từ dashboard & Overhead xấp xỉ \\
+\midrule()
+\endhead
+1.000 & Overhead thấp hơn nhóm 10.000 và 50.000 & khoảng 160\% \\
+5.000 & Overhead gần mức 1.000 & khoảng 155-160\% \\
+10.000 & Overhead tăng so với 1.000 và 5.000 & khoảng 180\% \\
+50.000 & Overhead cao nhất trong biểu đồ & khoảng 220\% \\
+\bottomrule()
+\end{longtable}
+
+Truy vấn lấy số liệu chính xác:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{SELECT}
+\NormalTok{    record\_count,}
+    \FunctionTok{COUNT}\NormalTok{(}\OperatorTok{*}\NormalTok{) }\KeywordTok{AS}\NormalTok{ measured\_runs,}
+    \FunctionTok{AVG}\NormalTok{(baseline\_duration\_ms) }\KeywordTok{AS}\NormalTok{ avg\_baseline\_duration\_ms,}
+    \FunctionTok{AVG}\NormalTok{(secured\_duration\_ms) }\KeywordTok{AS}\NormalTok{ avg\_secured\_duration\_ms,}
+    \FunctionTok{AVG}\NormalTok{(verification\_duration\_ms) }\KeywordTok{AS}\NormalTok{ avg\_verification\_duration\_ms,}
+    \FunctionTok{AVG}\NormalTok{(overhead\_percent) }\KeywordTok{AS}\NormalTok{ avg\_overhead\_percent,}
+\NormalTok{    percentile\_approx(overhead\_percent, }\FloatTok{0.5}\NormalTok{) }\KeywordTok{AS}\NormalTok{ median\_overhead\_percent}
+\KeywordTok{FROM}\NormalTok{ experiment\_metrics}
+\KeywordTok{WHERE}\NormalTok{ is\_warmup }\OperatorTok{=} \KeywordTok{false}
+\KeywordTok{GROUP} \KeywordTok{BY}\NormalTok{ record\_count}
+\KeywordTok{ORDER} \KeywordTok{BY}\NormalTok{ record\_count;}
+\end{Highlighting}
+\end{Shaded}
+
+Các giới hạn kỹ thuật:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Giới hạn
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tác động
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Hướng mở rộng
+\end{minipage} \\
+\midrule()
+\endhead
+Ledger và dữ liệu nằm cùng workspace & Admin cấp cao có thể sửa cả hai.
+& Externalize ledger hoặc lưu checkpoint hash trên hệ thống độc lập. \\
+MVP chưa có Consensus & Chưa đạt mức Blockchain phi tập trung. & Tích
+hợp Blockchain network hoặc Smart Contract. \\
+Batch hash có thể tốn chi phí với dữ liệu lớn & Overhead tăng theo
+record count. & Partition hash, Merkle Tree, incremental hashing. \\
+Verification phụ thuộc compute state & Cold start làm tăng latency. &
+Tách warm-up, đo nhiều lần, dùng cluster ổn định. \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{data-governance-architecture}{%
+\subsection{Data Governance
+Architecture}\label{data-governance-architecture}}
+
+Mô hình đáp ứng các miền Data Governance chính:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Miền Governance
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cơ chế trong mô hình
+\end{minipage} \\
+\midrule()
+\endhead
+Data Quality & Schema validation, deduplication, type normalization,
+consistency check \texttt{amount\ =\ quantity\ *\ unit\_price}. \\
+Data Lineage & Ghi source/target stage, transformation, record count,
+batch hash, execution time và status. \\
+Data Integrity & SHA-256 batch hash, schema hash, record count
+verification và block hash. \\
+Data Auditing & Lưu verification history, failure reason, first broken
+block và pipeline run ID. \\
+Monitoring & Dashboard KPI cho pipeline runs, ledger blocks,
+verification status, latency và overhead. \\
+\bottomrule()
+\end{longtable}
+
+Mô hình trả lời được các câu hỏi vận hành:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Dữ liệu hiện tại có khớp trạng thái đã ghi nhận không?
+\item
+  Sai lệch xảy ra ở stage nào?
+\item
+  Pipeline run nào bị ảnh hưởng?
+\item
+  Bảng nào là target của block lỗi?
+\item
+  First broken block là block nào?
+\item
+  Transformation liên quan là gì?
+\item
+  Security Overhead của cơ chế kiểm chứng là bao nhiêu?
+\end{enumerate}
+
+Dựa trên các kết quả thực nghiệm và phân tích overhead, việc kết hợp
+SHA-256, Data Lineage và hash-linked ledger minh chứng khả năng thiết
+lập một lớp kiểm chứng tamper-evident cho Data Pipeline. Mô hình không
+ngăn tuyệt đối mọi thay đổi ở tầng vật lý, nhưng thiết lập bằng chứng để
+phát hiện và định vị sai lệch. Hướng phát triển tiếp theo gồm ký số
+block, tách ledger khỏi workspace dữ liệu, lưu checkpoint hash lên
+Blockchain thật và thay batch hash tuyến tính bằng Merkle Tree cho dữ
+liệu lớn.
+
+\end{document}
