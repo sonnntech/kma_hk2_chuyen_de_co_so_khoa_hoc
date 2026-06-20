@@ -517,6 +517,15 @@ Lịch sử biến đổi được kiểm chứng thông qua quan hệ giữa ou
 | Verification output | `verification_results` |
 | Benchmark output | `experiment_metrics` |
 | Dashboard | Databricks SQL dashboard |
+| Source Control | GitHub repository: `https://github.com/sonnntech/kma_hk2_chuyen_de_co_so_khoa_hoc` |
+
+Mã nguồn mô hình thử nghiệm, notebook Databricks, unit test, SQL dashboard và tài liệu chạy lại được quản lý tại GitHub:
+
+```text
+https://github.com/sonnntech/kma_hk2_chuyen_de_co_so_khoa_hoc
+```
+
+Repository này đóng vai trò artifact kỹ thuật của đề tài, hỗ trợ kiểm tra khả năng tái lập kết quả thực nghiệm và đối chiếu giữa mô hình kiến trúc với phần triển khai.
 
 Thứ tự notebook:
 
