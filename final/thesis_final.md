@@ -1,9 +1,10 @@
 # Đánh giá Quasi-experimental về Cơ chế Tamper-evident trong Hệ thống Data Pipeline: Nghiên cứu Thực nghiệm với Hash-linked Ledger dạng Blockchain
 
 **Writer Iteration:** 2  
-**Date:** 2026-06-27  
+**Date:** 2026-06-28  
 **Source material:** bao_cao_cdx.md, bao_cao_cld.md  
-**Methodology reference:** ch10-quasi-experimental-research.md
+**Methodology reference:** ch10-quasi-experimental-research.md  
+**Teacher Guidelines reference:** teacher-guidelines.md
 
 ---
 
@@ -72,7 +73,134 @@ Theo *Research Methods for Cyber Security* (Edgar & Manz, Ch. 10), quasi-experim
 
 ---
 
-## 6. Experimental Design
+## 6. Requirement Analysis and Scope
+
+Phần này đáp ứng Teacher Guidelines: nghiên cứu phải đi từ câu hỏi nghiên cứu và yêu cầu thực nghiệm trước khi mô tả kiến trúc. Trong đề tài này, mô hình kỹ thuật chỉ là case study để kiểm tra phương pháp bán thực nghiệm.
+
+### 6.1. Research Requirements
+
+| Mã | Yêu cầu nghiên cứu | Lý do cần cho Teacher Guidelines / Ch. 10 |
+|---|---|---|
+| REQ-R1 | Phải có câu hỏi nghiên cứu đo lường được trước khi chọn cơ chế kỹ thuật | Bảo đảm tư duy bắt đầu từ RQs, không bắt đầu từ công cụ. |
+| REQ-R2 | Phải có control baseline cho từng nhóm kết quả chính | Ch. 10 yêu cầu so sánh treatment với baseline khả thi. |
+| REQ-R3 | Phải có giả thuyết falsifiable cho detection, traceability và overhead | Cho phép kết luận Supported / Rejected / Partially Supported. |
+| REQ-R4 | Phải ghi nhận biến không kiểm soát và ảnh hưởng của chúng | Bản chất của quasi-experiment là kiểm soát được gì thì kiểm soát, không kiểm soát được thì document. |
+| REQ-R5 | Phải tách raw results, observations, analysis và conclusions | Tránh dùng diễn giải làm bằng chứng. |
+
+### 6.2. Functional Requirements for the Case Study
+
+| Mã | Yêu cầu chức năng | Phạm vi hiện thực hóa |
+|---|---|---|
+| REQ-F1 | Sinh dữ liệu giao dịch có thể tái lập | Có: `RECORD_COUNT = 10_000`, `RANDOM_SEED = 42`, `SOURCE_SYSTEM = SCHOOL_DEMO` trong `config/demo_config.py`. |
+| REQ-F2 | Xử lý pipeline Source -> Bronze -> Silver -> Gold | Có: notebooks `01` đến `04`. |
+| REQ-F3 | Tạo evidence toàn vẹn tại mỗi stage | Có: batch hash, schema hash, record count, block hash, previous hash. |
+| REQ-F4 | Ghi lineage cho transformation | Có: `lineage_events`. |
+| REQ-F5 | Chạy tamper scenarios có kiểm soát | Có: `06_run_tamper_scenarios.py`, yêu cầu `CONFIRM_TAMPER = YES`. |
+| REQ-F6 | Ghi kết quả verification và benchmark | Có: `verification_results`, `experiment_metrics`. |
+
+### 6.3. Scope and Four-week Boundary
+
+Teacher Guidelines yêu cầu đóng khung phạm vi trong thời lượng thực thi nghiêm ngặt. Phạm vi nghiên cứu được giới hạn như sau:
+
+| Trong phạm vi | Ngoài phạm vi |
+|---|---|
+| Pipeline batch trên Databricks Free Edition | Production deployment nhiều tổ chức |
+| Dataset giao dịch giả lập, seed cố định | Dữ liệu production nhạy cảm hoặc dữ liệu khách hàng thật |
+| Hash-linked tamper-evident ledger | Blockchain phi tập trung hoàn chỉnh |
+| SHA-256, canonicalization, record count, schema hash | Consensus, Smart Contract, mining, token, public chain |
+| 6 tamper vectors + NONE + RESET_BASELINE | Attack space đầy đủ của insider/attacker thực |
+| Benchmark record count 1K, 5K, 10K, 50K | Kiểm thử quy mô hàng triệu/billions records |
+| Dashboard/table-based evidence | Kiểm định thống kê với confidence interval đầy đủ |
+
+### 6.4. Terminology Precision
+
+Teacher Guidelines yêu cầu dùng thuật ngữ chính xác. Báo cáo sử dụng các thuật ngữ sau:
+
+| Thuật ngữ | Cách dùng trong báo cáo |
+|---|---|
+| Architecture | Cấu trúc thành phần của mô hình: Source/Bronze/Silver/Gold, ledger, lineage, verification, metrics. |
+| Pipeline | Luồng xử lý dữ liệu có thứ tự từ Source -> Bronze -> Silver -> Gold. |
+| Workflow | Chuỗi thao tác nghiên cứu/notebook để chạy control, treatment, tamper, verification và benchmark. |
+| Procedure | Quy trình thực nghiệm có thể tái lập, gồm setup, run order, measurement, reset và exclusion rule. |
+| Diagram | Sơ đồ minh họa pipeline hoặc threat model; trong markdown này được biểu diễn bằng bảng và text diagram thay vì hình ảnh nhúng. |
+| Cyber security | Bảo vệ hệ thống dữ liệu trước hành vi tấn công/chỉnh sửa trái phép có chủ đích. Đây là phạm vi chính của đề tài. |
+| Network security | Bảo vệ kênh mạng, routing, firewall, IDS/IPS. Đây không phải phạm vi chính. |
+| Information security | Bảo vệ confidentiality, integrity, availability của thông tin nói chung. Data integrity trong đề tài là một phần của information security. |
+| Information assurance | Bảo đảm thông tin đáng tin cậy, auditability, governance và khả năng kiểm chứng theo thời gian. |
+| Safety | Chống rủi ro vô tình như lỗi pipeline, lỗi format, overwrite nhầm. |
+| Security | Chống hành vi có chủ đích như insider sửa dữ liệu, sửa ledger, phá chain link. |
+| Blockchain | Trong báo cáo này chỉ là cách gọi case study; thuật ngữ chính xác là hash-linked tamper-evident ledger, không phải blockchain phi tập trung đầy đủ. |
+
+### 6.5. Visualization Compliance
+
+Không sử dụng pie chart. Kết quả được trình bày bằng:
+
+- Bảng Markdown cho KPI, tamper results, lineage, overhead, validity và limitations.
+- Bar chart trong Databricks dashboard cho overhead theo record count (giá trị trong báo cáo được đánh dấu approximate).
+- SQL dashboard queries trong `sql/dashboard_queries.sql` cho KPI, latency, overhead, first broken block và lineage flow.
+
+Box-plot, CDF và histogram chưa có trong tài liệu hiện tại. **Evidence Not Found** cho các biểu đồ này. Future Work FW3 đề xuất tăng số lần lặp benchmark để đủ dữ liệu vẽ box-plot/CDF có ý nghĩa.
+
+### 6.6. Course Output Format and Validated Framework Use
+
+Teacher Guidelines yêu cầu bản thảo mô phỏng vòng đời bài báo hội thảo: Problem -> Gap -> RQ -> Methodology -> Design -> Evaluation -> Conclusion. Cấu trúc hiện tại đi theo đúng vòng đời này, nhưng đây vẫn là bản Markdown; định dạng IEEE hai cột 6-8 trang là bước chế bản sau khi nội dung phương pháp được chốt. **Evidence Not Found** cho file IEEE PDF/LaTeX hoàn chỉnh trong repository hiện tại.
+
+Teacher Guidelines cũng yêu cầu không tự lập trình lại hệ thống phức tạp từ đầu khi dùng bán thực nghiệm/mô phỏng. Đề tài sử dụng các nền tảng đã có để đo đạc:
+
+| Thành phần | Công cụ/framework đã có | Vai trò |
+|---|---|---|
+| Môi trường pipeline | Databricks Free Edition | Experimental environment và compute platform. |
+| Xử lý dữ liệu | PySpark, Delta Table | Framework xử lý/lưu trữ dữ liệu đã được cộng đồng sử dụng rộng rãi. |
+| Dashboard | Databricks SQL | Công cụ quan sát KPI và benchmark. |
+| Unit testing local | pytest | Kiểm tra các module đo lường và xử lý phụ trợ. |
+
+Phần tự xây dựng chỉ là treatment mechanism và instrumentation của case study: canonicalization, hashing, ledger, lineage, verification, tamper scenarios và metrics.
+
+---
+
+## 7. Threat Model and Ethical Responsibilities
+
+### 7.1. Threat Model
+
+Không tuyên bố hệ thống "an toàn" chung chung. Threat model của nghiên cứu được giới hạn vào các hành vi làm sai lệch dữ liệu hoặc evidence trong pipeline.
+
+| Thành phần | Giả định |
+|---|---|
+| Tài sản cần bảo vệ | Dữ liệu giao dịch trong Bronze/Silver/Gold, ledger evidence, lineage events, verification results. |
+| Đối tượng tấn công | Insider hoặc người có quyền thao tác bảng dữ liệu/metadata trong workspace demo; tamper scenarios mô phỏng threat actor proxy. |
+| Kiến thức của attacker | Biết cấu trúc bảng và biết pipeline dùng hash/ledger; không giả định attacker kiểm soát toàn bộ hạ tầng cloud provider. |
+| Mục tiêu attacker | Sửa nội dung dữ liệu, xóa/chen record, sửa ledger payload, hoặc phá liên kết previous_hash để che giấu thay đổi. |
+| Tài nguyên attacker | Quyền ghi vào một hoặc một số bảng trong workspace demo; không có quyền độc lập sửa external checkpoint vì MVP chưa externalize ledger. |
+| Khả năng suy ứng | Attacker có thể chọn stage hoặc metadata cần sửa; chưa mô phỏng concurrent attack, timing attack hoặc attacker có quyền admin toàn phần. |
+| Trust boundary | Data tables, ledger và lineage đều nằm trong cùng Databricks workspace; đây là limitation L5. |
+
+Mapping threat model sang IV1:
+
+| Threat vector | Tamper scenario |
+|---|---|
+| Sửa nội dung giao dịch | `MODIFY_TRANSACTION_AMOUNT` |
+| Xóa bản ghi | `DELETE_TRANSACTION` |
+| Chèn bản ghi giả | `INSERT_FAKE_TRANSACTION` |
+| Sửa evidence hash | `MODIFY_LEDGER_BATCH_HASH` |
+| Sửa metadata transformation | `MODIFY_LEDGER_TRANSFORMATION` |
+| Phá liên kết chuỗi | `MODIFY_LEDGER_PREVIOUS_HASH` |
+
+### 7.2. Ethics and Dual-use Responsibility
+
+Đề tài có tính lưỡng dụng: cùng một kỹ thuật tamper scenario có thể dùng để kiểm thử phòng thủ hoặc minh họa cách phá dữ liệu. Các biện pháp đạo đức và giảm thiểu rủi ro:
+
+| Rủi ro đạo đức | Biện pháp trong nghiên cứu |
+|---|---|
+| Dùng dữ liệu thật gây lộ thông tin cá nhân | Không sử dụng dữ liệu thật hoặc dữ liệu nhạy cảm; dataset là synthetic. |
+| Tamper notebook bị chạy nhầm | `06_run_tamper_scenarios.py` yêu cầu `CONFIRM_TAMPER = YES`. |
+| Hướng dẫn tấn công bị áp dụng vào hệ thống production | Báo cáo giới hạn trong workspace demo; không cung cấp chỉ dẫn phá hoại production. |
+| Thổi phồng năng lực bảo vệ | Báo cáo dùng ngôn ngữ bounded: tamper-evident, không prevent tuyệt đối; không claim causal proof. |
+| Insider có quyền admin sửa cả data và ledger | Công bố limitation L5 và future work externalize ledger/ký số block. |
+| Bóp méo số liệu | Báo cáo đánh dấu approximate/missing evidence, công bố kết quả yếu và giới hạn đo lường. |
+
+---
+
+## 8. Experimental Design
 
 **Thiết kế:** Pre-test/Post-test Non-equivalent Control Group Design
 
@@ -101,7 +229,7 @@ Thiết kế này không phải Difference-of-Differences đầy đủ vì contr
 
 ---
 
-## 7. Treatment and Control
+## 9. Treatment and Control
 
 **Treatment** (can thiệp được đánh giá):
 
@@ -141,7 +269,7 @@ Hai loại control này không mâu thuẫn nhau — chúng phục vụ hai câu
 
 ---
 
-## 8. Independent Variables and Dependent Variables
+## 10. Independent Variables and Dependent Variables
 
 ### Biến độc lập (Independent Variables)
 
@@ -168,7 +296,7 @@ Hai loại control này không mâu thuẫn nhau — chúng phục vụ hai câu
 
 ---
 
-## 9. Metrics and Measurement Sources
+## 11. Metrics and Measurement Sources
 
 ### Cho H1 — Detection coverage:
 
@@ -208,7 +336,7 @@ GROUP BY record_count ORDER BY record_count;
 
 ---
 
-## 10. Experimental Procedure
+## 12. Experimental Procedure
 
 Quy trình đủ để tái lập bởi researcher độc lập:
 
@@ -261,7 +389,7 @@ Bước 12: Reset về trạng thái sạch sau toàn bộ experiment
 
 ---
 
-## 11. Raw Results
+## 13. Raw Results
 
 *Phần này chỉ báo cáo dữ liệu thô. Không có diễn giải.*
 
@@ -288,7 +416,7 @@ Bước 12: Reset về trạng thái sạch sau toàn bộ experiment
 
 ### Bảng R3 — Overhead theo record count
 
-> ⚠ **Measurement Approximate** — Giá trị ước tính từ dashboard bar chart (PDF export). Giá trị chính xác chưa được thu thập trong tài liệu này. Để lấy giá trị chính xác, thực thi SQL query trong Section 9 trên `experiment_metrics` (lọc `is_warmup = false`).
+> ⚠ **Measurement Approximate** — Giá trị ước tính từ dashboard bar chart (PDF export). Giá trị chính xác chưa được thu thập trong tài liệu này. Để lấy giá trị chính xác, thực thi SQL query trong Section 11 trên `experiment_metrics` (lọc `is_warmup = false`).
 
 | Record count (IV2) | DV5 Overhead xấp xỉ | Nguồn |
 |---:|---:|---|
@@ -340,7 +468,7 @@ Bước 12: Reset về trạng thái sạch sau toàn bộ experiment
 
 ---
 
-## 12. Observations
+## 14. Observations
 
 *Phần này chỉ ghi nhận sự kiện quan sát được — không có diễn giải.*
 
@@ -366,9 +494,9 @@ Bước 12: Reset về trạng thái sạch sau toàn bộ experiment
 
 ---
 
-## 13. Analysis by Hypothesis
+## 15. Analysis by Hypothesis
 
-*Phần này diễn giải các quan sát. Mọi diễn giải đều tham chiếu observation cụ thể từ Phần 12.*
+*Phần này diễn giải các quan sát. Mọi diễn giải đều tham chiếu observation cụ thể từ Section 14.*
 
 ### Phân tích H1 — Detection Coverage
 
@@ -404,9 +532,9 @@ H3 phát biểu: Overhead tăng theo record count và có quan hệ nhất quán
 
 Từ O7: Overhead xấp xỉ tăng theo thứ tự đơn điệu: 160% (1K) → 155-160% (5K) → 180% (10K) → 220% (50K). Mặc dù có điểm giảm nhẹ từ 1K sang 5K (có thể do variance compute), xu hướng tổng thể là tăng.
 
-Từ O8: Verification latency có một điểm bất thường (>31.000 ms), phù hợp với uncontrolled variable về cold start đã ghi nhận tại Phần 4.
+Từ O8: Verification latency có một điểm bất thường (>31.000 ms), phù hợp với uncontrolled variable về cold start đã ghi nhận tại Section 5.
 
-**Giới hạn phân tích**: Giá trị overhead trong Bảng R3 là xấp xỉ từ bar chart — không phải giá trị chính xác từ `experiment_metrics`. Để có kết luận mạnh hơn, cần execute SQL query trong Phần 9 để lấy median_overhead_percent cho từng record count level.
+**Giới hạn phân tích**: Giá trị overhead trong Bảng R3 là xấp xỉ từ bar chart — không phải giá trị chính xác từ `experiment_metrics`. Để có kết luận mạnh hơn, cần execute SQL query trong Section 11 để lấy median_overhead_percent cho từng record count level.
 
 Bằng chứng hiện có **gợi ý** H3 được hỗ trợ với cảnh báo: variance do compute state chưa kiểm soát.
 
@@ -425,7 +553,7 @@ H4 **được xác nhận** bởi evidence của variance và single-environment
 
 ---
 
-## 14. Conclusions by Hypothesis
+## 16. Conclusions by Hypothesis
 
 | Hypothesis | Metric | Evidence | Status | Boundary |
 |---|---|---|---|---|
@@ -436,7 +564,7 @@ H4 **được xác nhận** bởi evidence của variance và single-environment
 
 ---
 
-## 15. Bias
+## 17. Bias
 
 *Mỗi bias bao gồm: nguồn gốc → hypothesis bị ảnh hưởng → cách diễn giải bị giới hạn → biện pháp giảm thiểu.*
 
@@ -492,7 +620,7 @@ H4 **được xác nhận** bởi evidence của variance và single-environment
 
 ---
 
-## 16. Validity Threats
+## 18. Validity Threats
 
 ### Bảng Validity Threat
 
@@ -521,7 +649,7 @@ H4 **được xác nhận** bởi evidence của variance và single-environment
 
 ---
 
-## 17. Methodological Limitations
+## 19. Methodological Limitations
 
 | # | Giới hạn | Loại | Tác động |
 |---|---|---|---|
@@ -536,7 +664,7 @@ H4 **được xác nhận** bởi evidence của variance và single-environment
 
 ---
 
-## 18. Future Work to Improve the Quasi-experimental Design
+## 20. Future Work to Improve the Quasi-experimental Design
 
 *Mỗi hướng future work liên kết đến limitation cụ thể và loại validity cần cải thiện.*
 
@@ -552,10 +680,141 @@ H4 **được xác nhận** bởi evidence của variance và single-environment
 | **FW8** — Adversarial testing với red team | L3, L6 | Internal, External | Hợp tác với security team để test attack vectors không được mô hình hóa; tiệm cận true experiment hơn |
 | **FW9** — Merkle Tree / partition-level hash | L4 | Conclusion | Kiểm tra H3 ở quy mô 500K+ records; xác định scalability threshold |
 | **FW10** — Randomize run order | L1 | Internal | Giảm order bias; randomize thứ tự control/treatment runs trong benchmark |
+| **FW11** — Add benchmark distributions | L4, L8 | Conclusion | Thu thập ≥30 runs/level để vẽ box-plot, CDF hoặc histogram theo Teacher Guidelines. |
 
 ---
 
-## 19. Evidence Chain Appendix
+## 21. Reproducibility Appendix
+
+Phụ lục này đáp ứng Teacher Guidelines về minh bạch và khả năng tái lập. Mục tiêu là giúp researcher khác chạy lại kết quả demo trong khoảng 15 phút nếu đã có Databricks workspace và compute khả dụng.
+
+### 21.1. Repository and Source Code
+
+```text
+Repository: https://github.com/sonnntech/kma_hk2_chuyen_de_co_so_khoa_hoc
+Runtime target: Databricks Free Edition
+Notebook compute: Python notebook compute hoặc serverless compute
+SQL dashboard: Databricks SQL Warehouse
+Local test dependencies: requirements.txt
+```
+
+### 21.2. Environment Configuration
+
+| Thành phần | Giá trị / Nguồn |
+|---|---|
+| Catalog | `workspace` trong `config/demo_config.py` |
+| Schema | `blockchain_pipeline_demo` trong `config/demo_config.py` |
+| Default record count | `10_000` |
+| Random seed | `42` |
+| Source system | `SCHOOL_DEMO` |
+| Python packages local | `pyspark>=3.5,<4.0`, `pytest>=8,<9` |
+| CPU/RAM máy chạy Databricks | **Evidence Not Found** trong repository; Databricks Free Edition/serverless compute không công bố cấu hình cố định trong tài liệu này. |
+| Databricks Runtime version | **Evidence Not Found** trong repository; cần ghi lại từ workspace khi chạy lại. |
+
+### 21.3. Clean Run Commands / Notebook Order
+
+Chạy lần lượt bằng Python notebook compute:
+
+```text
+notebooks/00_setup_environment.py
+notebooks/01_generate_source_data.py
+notebooks/02_bronze_ingestion.py
+notebooks/03_silver_transformation.py
+notebooks/04_gold_aggregation.py
+notebooks/05_verify_integrity.py
+```
+
+Kết quả kỳ vọng cho run sạch:
+
+```text
+SOURCE  VALID
+BRONZE  VALID
+SILVER  VALID
+GOLD    VALID
+```
+
+### 21.4. Tamper Scenario Run
+
+Chạy `notebooks/06_run_tamper_scenarios.py` với widgets:
+
+```text
+SCENARIO = MODIFY_TRANSACTION_AMOUNT
+CONFIRM_TAMPER = YES
+PIPELINE_RUN_ID = để trống hoặc nhập run id cụ thể
+```
+
+Các scenario hỗ trợ:
+
+```text
+NONE
+MODIFY_TRANSACTION_AMOUNT
+DELETE_TRANSACTION
+INSERT_FAKE_TRANSACTION
+MODIFY_LEDGER_BATCH_HASH
+MODIFY_LEDGER_TRANSFORMATION
+MODIFY_LEDGER_PREVIOUS_HASH
+RESET_BASELINE
+```
+
+Reset sau mỗi scenario:
+
+```text
+SCENARIO = RESET_BASELINE
+CONFIRM_TAMPER = YES
+```
+
+### 21.5. Benchmark Run
+
+Chạy:
+
+```text
+notebooks/07_experiment_and_metrics.py
+```
+
+Widget mặc định:
+
+```text
+RECORD_COUNTS = 1000,5000,10000,50000
+RUNS_PER_SIZE = 3
+INCLUDE_WARMUP = YES
+```
+
+Warm-up runs được đánh dấu `is_warmup = true` và không dùng trong summary chính.
+
+### 21.6. Dashboard and SQL Evidence
+
+Tạo dashboard bằng `sql/dashboard_queries.sql`:
+
+```sql
+USE CATALOG `workspace`;
+USE SCHEMA `blockchain_pipeline_demo`;
+```
+
+Các KPI cần kiểm tra:
+
+```text
+total_pipeline_runs
+total_blocks
+successful_verification_blocks
+detected_event_count
+verification_latency_ms
+avg_overhead_percent
+lineage flow
+first_broken_block
+```
+
+### 21.7. Known Reproducibility Gaps
+
+| Gap | Tác động |
+|---|---|
+| CPU/RAM và Databricks Runtime version chưa được ghi trong thesis | Làm giảm reproducibility theo Teacher Guidelines; cần bổ sung khi chạy thật. |
+| Bảng R3 overhead hiện là approximate từ dashboard chart | Cần export trực tiếp `experiment_metrics` để có raw values. |
+| Bảng R5 first_broken_block hiện là approximate | Cần export query JOIN `verification_results` × `lineage_events`. |
+| Benchmark mới có `RUNS_PER_SIZE = 3` | Chưa đủ cho box-plot/CDF đáng tin cậy. |
+
+---
+
+## 22. Evidence Chain Appendix
 
 ### A1 — Research Question to Hypothesis Map
 

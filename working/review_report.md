@@ -1,169 +1,143 @@
-# Review Report — Iteration 1
-**Reviewer Role:** Chapter 10 Lecturer (Quasi-experimental Research)  
-**Target:** working/thesis_working.md  
-**Date:** 2026-06-27  
-**Primary Question:** "Would this receive full marks for demonstrating Quasi-experimental Research?"
+# Review Report — Iteration 2
+
+**Reviewer Role:** Research Methodology and Course Compliance Reviewer  
+**Target:** `working/thesis_working.md`  
+**Date:** 2026-06-28  
+**Review Dimensions:** Teacher Guidelines + Chapter 10 Quasi-experimental Research  
 
 ---
 
 ## 1. Executive Summary
 
-Bản thảo này là cải tiến đáng kể so với cả bao_cao_cdx.md và bao_cao_cld.md. Tất cả 20 section theo Writer template đều có mặt. Sáu bảng mapping bắt buộc đã được thêm vào. Causal language được kiểm soát tốt. Treatment được định nghĩa đúng (không phải tamper scenario). Thiết kế Pre-test/Post-test Non-equivalent Control là chính xác hơn DiD claim của bao_cao_cld.md.
+The thesis now satisfies both independent requirements at review level:
 
-Tuy nhiên, còn **2 Major issues** cần giải quyết trước khi có thể đạt điểm cao nhất.
+1. **Teacher Guidelines Compliance:** PASS with minor residual formatting/reproducibility risks.
+2. **Chapter 10 Methodology Compliance:** PASS with minor evidence precision caveats.
+
+The document now starts from research questions, maps the methodology explicitly, includes requirement analysis and scoping, defines terminology, provides a threat model, discusses ethics and dual-use risk, separates raw results from observations and analysis, documents bias/validity/limitations, and includes a reproducibility appendix.
+
+No Critical or Major issues remain.
 
 ---
 
-## 2. Scoring
+## 2. Teacher Guidelines Review
 
-| Mục | Điểm tối đa | Điểm nhận được | Ghi chú |
+| Requirement | Status | Evidence / Location | Issue |
 |---|---|---|---|
-| Research Problem | 10 | 9 | Tốt. Cyber security framing rõ. Câu hỏi trung tâm chính xác. |
-| Research Gap | 10 | 8 | Bảng limitation tốt; gap statement hơi chung chung ở cuối. |
-| Research Questions | 10 | 9 | 4 RQs measurable. RQ4 về uncontrolled variables là điểm cộng Ch.10. |
-| Hypotheses | 10 | 8 | H1-H3 falsifiable tốt. H4 không falsifiable — cần clarify là boundary condition. |
-| Why Quasi | 15 | 13 | 5 drivers đầy đủ. Thiếu explicit statement: "Các biến có thể kiểm soát được đã kiểm soát." |
-| Experimental Design | 15 | 11 | Correct design type; nhưng hai "control" khác nhau (NONE và baseline_duration) cần giải thích rõ hơn. |
-| Variables | 10 | 9 | 5 IVs + 8 DVs + Variable Table đầy đủ. Nhỏ: IV3 role ít được dùng trong analysis. |
-| Measurements | 10 | 7 | **Major**: H1 TP evidence không có timestamps/query output; H3 là approximate từ chart. |
-| Bias & Validity | 15 | 12 | 5 biases với affected hypothesis: tốt. All 4 validity types: tốt. Nhỏ: B4 mitigation quá generic. |
-| Limitations | 10 | 9 | 8 limitations methodological. Tốt. Nhỏ: L8 (limited benchmark repetitions) cần con số cụ thể. |
-| Future Work | 5 | 4 | 10 items, tất cả linked to limitations. Tốt. Nhỏ: FW3 thiếu rõ "số lần lặp tối thiểu cần thiết." |
-| **TOTAL** | **100** | **99** | |
+| Research-first framing | PASS | Sections 1, 3, 4 | RQs precede technical design. |
+| Methodology mapping | PASS | Sections 5, 8, 18, 22 | Chapter 10 is explicitly mapped to design, variables, evidence, and validity. |
+| Requirement analysis and scoping | PASS | Section 6 | Requirements and four-week scope are explicit. |
+| Terminology precision | PASS | Section 6.4 | Architecture, pipeline, workflow, procedure, cyber/security/safety terms are distinguished. |
+| Risk / threat model | PASS | Section 7.1 | Threat actor assumptions, goals, resources, trust boundary, and IV1 mapping are explicit. |
+| Ethics and dual-use | PASS | Section 7.2 | Synthetic data, tamper confirmation, bounded claims, and misuse risk are addressed. |
+| Visualization requirements | PASS | Section 6.5, Section 13, SQL dashboard references | No pie chart. Uses Markdown tables and dashboard bar chart. Box-plot/CDF/histogram marked as not yet supported due insufficient repetitions. |
+| Reproducibility appendix | PASS | Section 21 | Notebook order, widgets, config, benchmark and SQL evidence steps are present. |
+| Scientific honesty | PASS | Sections 13, 15, 18, 21.7 | Approximate and missing evidence are marked explicitly. |
+| Discussion of limitations | PASS | Sections 15, 17, 18, 19, 20 | Discussion ties weak results and limitations to interpretation and future work. |
+
+**Teacher Guidelines Score:** 94/100
+
+Minor residual risks:
+- IEEE two-column PDF/LaTeX artifact is not present; thesis marks this as `Evidence Not Found`.
+- CPU/RAM and Databricks Runtime version are not present; thesis marks these as reproducibility gaps.
+
+These are not Major because the thesis is a Markdown research artifact and does not hide the gaps.
 
 ---
 
-## 3. Critical Issues
+## 3. Chapter 10 Methodology Review
 
-*(Không có)*
+| Requirement | Status | Evidence / Location | Issue |
+|---|---|---|---|
+| Research problem | PASS | Section 1 | Clear cyber security research problem. |
+| Research gap | PASS | Section 2 | Existing controls and gaps are stated. |
+| Research questions | PASS | Section 3 | Four measurable RQs. |
+| Hypotheses | PASS | Section 4 | H1-H3 falsifiable; H4 correctly labeled boundary condition. |
+| Why quasi-experimental | PASS | Section 5 | True experiment infeasibility explained with Chapter 10 drivers. |
+| Experimental design | PASS | Section 8 | Pre-test/post-test non-equivalent control and overhead comparison are clearly bounded. |
+| Treatment | PASS | Section 9 | Treatment is the intervention, not the whole system or attack scenario. |
+| Control | PASS | Section 9 | Two control conditions are explicitly separated by hypothesis purpose. |
+| Independent variables | PASS | Section 10 | IV1-IV5 defined. |
+| Dependent variables | PASS | Section 10 | DV1-DV8 defined. |
+| Metrics and measurements | PASS | Section 11 | Metrics, formulas, and sources are explicit. |
+| Experimental procedure | PASS | Section 12 | Reproducible notebook sequence and reset protocol. |
+| Raw results | PASS | Section 13 | Raw results precede interpretation. |
+| Observations | PASS | Section 14 | Observations are factual. |
+| Analysis | PASS | Section 15 | Analysis references observations. |
+| Bias | PASS | Section 17 | Bias affects interpretation and names affected hypotheses. |
+| Validity | PASS | Section 18 | Internal, external, construct, and conclusion validity are explained. |
+| Limitations | PASS | Section 19 | Methodological limitations are explicit. |
+| Future work | PASS | Section 20 | Future work maps to limitations/validity. |
 
----
+**Chapter 10 Score:** 96/100
 
-## 4. Major Issues
+Minor residual risks:
+- H2 first_broken_block evidence is approximate and requires query export for exact block IDs.
+- H3 overhead values are approximate from dashboard chart, not raw exported `experiment_metrics`.
 
-### MAJOR-1: Evidence cho H1 (Bảng R4) — Measurement visibility
-
-**Vấn đề:** Bảng R4 báo cáo "DV1 quan sát = DATA_TAMPERED" cho MODIFY_TRANSACTION_AMOUNT v.v., và nói rõ nguồn là `verification_results` "trong quá trình chạy thực nghiệm." Tuy nhiên, không có row data nào từ bảng này xuất hiện trong thesis — không có timestamps, không có run IDs, không có query output.
-
-Đồng thời, Dashboard export (Bảng R1) cho thấy 14 runs VALID và 0 detection errors. Người đọc không thể tự xác minh Bảng R4 từ dashboard.
-
-**Hệ quả:** Theo Ch.10 Writer rules: *"Every Measurement must appear inside the Results section. Reject invisible evidence."* Bảng R4 là boundary case — nguồn được nêu, nhưng actual data không visible.
-
-**Yêu cầu sửa:** Thêm một trong hai:
-- (Option A) Actual query output từ `verification_results` cho từng tamper scenario: run_id, timestamp, scenario, result, status
-- (Option B) Đổi từ "DV1 quan sát" thành "DV1 thiết kế/kỳ vọng" và thêm note "Measurement Collected — verification_results table; query yêu cầu chạy lại tamper scenarios để export. Bằng chứng TN có thể xác nhận từ Dashboard R1 (14/14 VALID sau RESET_BASELINE)."
-
-Option B là honest approach phù hợp với giới hạn thực tế.
-
-**Severity: MAJOR** — Nếu không sửa, Validator có thể đánh Evidence Mismatch giữa Bảng R4 và Dashboard R1.
-
----
-
-### MAJOR-2: Experimental Design — Hai "control" khác nhau chưa được giải thích rõ
-
-**Vấn đề:** Thesis dùng:
-- "Control" = NONE scenario (trong cùng treatment pipeline) cho H1, H2
-- "Control" = pipeline không có ledger (`baseline_duration_ms`) cho H3
-
-Đây là hai "control" khác nhau hoàn toàn. Phần 6 (Experimental Design) mô tả điều này nhưng không label rõ ràng để reader phân biệt ngay.
-
-**Hệ quả:** Validator có thể hỏi: "Control được định nghĩa là pipeline không có ledger (Section 7) — nhưng sao control cho H1 là NONE condition trong treatment pipeline?"
-
-**Yêu cầu sửa:** Thêm một bảng nhỏ hoặc clarification paragraph trong Section 7 hoặc Section 8:
-
-```
-Lưu ý về hai loại control trong thiết kế:
-- Control Condition for H1/H2 (Detection/Traceability):
-  Cùng pipeline với ledger, tamper_scenario = NONE.
-  Mục đích: đo false positive rate; xác nhận baseline VALID.
-- Control Condition for H3 (Overhead):
-  Pipeline không có ledger (baseline_duration_ms).
-  Mục đích: đo chi phí bổ sung của treatment.
-Hai control này phục vụ hai research questions khác nhau và không mâu thuẫn.
-```
-
-**Severity: MAJOR** — Nếu không sửa, thiết kế quasi-experimental sẽ gây confusing cho người đọc và Validator.
+These are explicitly marked and bounded, so they do not block acceptance.
 
 ---
 
-## 5. Minor Issues
+## 4. Scores
 
-### MINOR-1: H4 là boundary condition hypothesis, không phải falsifiable hypothesis
-
-**Vấn đề:** H4 nói "không thể falsify" trong cùng section với H1-H3 được nêu là "điều kiện falsifiable." Điều này có thể gây hiểu nhầm.
-
-**Gợi ý sửa:** Thêm label rõ ràng: "H4 là Methodological Boundary Hypothesis — không falsifiable theo cùng cơ chế như H1-H3, nhưng được xác nhận (confirmed/denied) bằng cách kiểm tra xem uncontrolled variables có thực sự tác động đến kết quả không."
-
-### MINOR-2: O9 trong Observations mang tính diễn giải
-
-**Vấn đề:** "Khi tamper xảy ra tại một stage, first_broken_block...trỏ đến block tương ứng" — "Khi tamper xảy ra" đã là diễn giải nhân quả, không phải observation thuần túy.
-
-**Gợi ý sửa:** "Trong Bảng R5, cột 'Stage khớp IV3?' ghi nhận 'Có' cho tất cả 6 tamper scenarios. Cột 'Lineage event tìm thấy?' ghi nhận 'Có' cho tất cả 6 scenarios."
-
-### MINOR-3: Bảng R3 — Overhead approximate thiếu "Measurement Not Yet Collected" marker
-
-**Vấn đề:** Thesis honest về việc đây là approximate values, nhưng không dùng explicit marker theo Writer skill requirements.
-
-**Gợi ý sửa:** Thêm vào cuối Bảng R3: "*Measurement Approximate — Giá trị chính xác: chưa thu thập trong tài liệu này. SQL query trong Section 9 trả về median_overhead_percent từ experiment_metrics.*"
+| Dimension | Score | Result |
+|---|---:|---|
+| Teacher Guidelines | 94/100 | PASS |
+| Chapter 10 Methodology | 96/100 | PASS |
+| Overall Review | 95/100 | PASS |
 
 ---
 
-## 6. Side-by-Side Comparison: CDX vs CLD vs Working Draft
+## 5. Critical Issues
 
-| Tiêu chí Ch.10 | bao_cao_cdx.md | bao_cao_cld.md | thesis_working.md | Winner |
-|---|---|---|---|---|
-| Research Problem framing | Tốt | Tốt | Tốt, explicit | Working |
-| Research Gap | Có | Có | Có + table | Working |
-| RQ measurability | 4 RQs, clear | 3 RQs, clear | 4 RQs + measurable column | Working |
-| Hypotheses falsifiability | 4H, tốt | 3H, tốt | 4H + explicit falsification | Working |
-| Why Quasi — 5 drivers | Có | Có | Có + mitigation column | Working |
-| Treatment definition | Correct | Correct | Correct | Tie |
-| Experimental Design type | Pre-test/Post-test | DiD (incorrect) | Pre-test/Post-test (corrected) | Working |
-| Two "control" clarity | Không rõ | Không rõ | Không rõ (MAJOR-2) | None pass |
-| IVs | 5 | 3 | 5 + Variable Table | Working |
-| DVs | 8 | 4 | 8 + full table | Working |
-| Raw Results (separate) | Không | Không | Có (Sections 11) | Working |
-| Observations (separate) | Không | Không | Có (Section 12) | Working |
-| Analysis (separate) | Có (partial) | Có (partial) | Có (Section 13) | Working |
-| Conclusions — Supported/Rejected | Implicit | Implicit | Explicit | Working |
-| Bias with affected H | Không | Có (partial) | Có (explicit) | Working |
-| All 4 validity types | Có | Có (partial) | Có + Validity Threat Table | Working |
-| Methodological limitations | Có | Có | Có (8 items) | Working |
-| Future Work → limitations | Có | Có | Có (10 items, all linked) | Working |
-| 6 required mapping tables | Không | Không | Có (Appendix) | Working |
-| H1 evidence visible | Không | Không | Partial (MAJOR-1) | None pass |
-| H3 overhead precise | Approximate | Approximate | Approximate (MINOR-3) | None pass |
+None.
 
 ---
 
-## 7. Missing Chapter 10 Concepts
+## 6. Major Issues
 
-Không còn missing Ch.10 concepts. Tất cả 20 sections từ Writer template đều có mặt. Sáu bảng mapping đều có.
-
----
-
-## 8. Priority Improvements
-
-Theo thứ tự ưu tiên:
-
-1. **[MAJOR-1]** Clarify H1 evidence status: đổi "DV1 quan sát" → "DV1 thiết kế + Measurement Collected" với explicit note về dashboard vs. verification_results distinction.
-
-2. **[MAJOR-2]** Add clarifying paragraph trong Section 7 hoặc 8 về hai loại control được dùng cho hai research questions khác nhau.
-
-3. **[MINOR-3]** Thêm "Measurement Approximate" marker rõ ràng cho Bảng R3.
-
-4. **[MINOR-2]** Sửa O9 để chỉ là observation thuần túy (không có "Khi tamper xảy ra").
-
-5. **[MINOR-1]** Clarify H4 là Boundary Condition Hypothesis, không phải falsifiable hypothesis.
+None.
 
 ---
 
-## 9. Final Verdict
+## 7. Minor Issues
 
-**Good** — Thesis này thể hiện tốt Quasi-experimental Research. Tất cả cấu trúc Ch.10 đều có mặt. Tuy nhiên, hai Major issues về evidence visibility (H1) và dual-control clarity cần được giải quyết trước khi có thể nâng lên **Excellent**.
-
-Sau khi sửa MAJOR-1 và MAJOR-2, thesis này có khả năng đạt PASS từ Validator.
+1. IEEE two-column formatted artifact is not included in the repository.
+2. CPU/RAM and Databricks Runtime version are not captured.
+3. H2 exact first_broken_block rows should be exported in a future evidence table.
+4. H3 overhead should be replaced with direct SQL output from `experiment_metrics`.
+5. Box-plot/CDF/histogram require more repetitions before they become meaningful.
 
 ---
 
-**Reviewer Recommendation:** → ITERATE (Writer revises MAJOR-1, MAJOR-2, và 3 Minor issues)
+## 8. Strengths
+
+- Research methodology is now the main artifact; Blockchain is kept as case study/treatment mechanism.
+- Treatment and control are correct and explicitly separated.
+- Raw results, observations, analysis, and conclusions are separated.
+- Bias and validity sections affect interpretation rather than serving as cosmetic lists.
+- Teacher Guidelines additions are integrated without replacing Chapter 10 requirements.
+- Missing or weak evidence is disclosed instead of hidden.
+
+---
+
+## 9. Priority Fix Plan for Writer
+
+No required fixes before finalization.
+
+Optional future improvements:
+
+1. Export exact `verification_results` rows for all tamper scenarios.
+2. Export exact `experiment_metrics` rows and replace approximate overhead values.
+3. Record CPU/RAM/runtime metadata from Databricks.
+4. Produce IEEE two-column PDF/LaTeX.
+5. Run ≥30 benchmark repetitions per record count and add box-plot/CDF.
+
+---
+
+## 10. Final Recommendation
+
+**Excellent**
+
+The thesis is ready to finalize under the AI Research Framework workflow.
